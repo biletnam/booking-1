@@ -116,12 +116,12 @@ function main()
 {
     GLOBAL $TPL_HOME;
 
-    // Si l'utilisateur annule sa réservation, la session est supprimée
-    // et la page d'accueil est affichée.
+    /* Si l'utilisateur annule sa réservation, la session est supprimée et la page d'accueil est
+     * affichée. La méthode `header('Location:#')` peut sembler brutale mais c'est la seule
+     * protégeant d'un rafraichissement de la page.
+     */
     if (isset($_POST['reset']))
-    {
-        session_unset();
-        print($TPL_HOME);
+        header('Location:#');
     }
     else if (checkForInput())
     {
