@@ -16,7 +16,7 @@ GLOBAL $TPL_HOME, $TPL_DETAILS;
 $TPL_HOME = <<<EOT
     <h2>Reservation</h2>
     <p>Le prix de la place est de 10€ jusqu'à 12 ans et ensuite de 15€.</p>
-    <p>Le prix de l'assurance annulation est de 20€ quel ue soit le nombre de voyageurs.</p>
+    <p>Le prix de l'assurance annulation est de 20€ quel que soit le nombre de voyageurs.</p>
 
     <form method="post">
     <fieldset>
@@ -61,22 +61,20 @@ EOT;
  */
 function checkForInput()
 {
-    // Les paramètres existes ?
-    if (isset($_POST['destination']) AND isset($_POST['persons_counter']))
+    // les variables existent *ET* ne sont pas vides ?
+    if (!empty($_POST['destination']) AND !empty($_POST['persons_counter']))
     {
-        // Les champs ne sont pas vides ?
-        if ($_POST['destination'] AND $_POST['persons_counter'])
-        {
-            $_SESSION['destination'] = $_POST['destination'];
-            $_SESSION['persons_counter'] = $_POST['persons_counter'];
-            $_SESSION['insurance'] = isset($_POST['insurance']) ? true : false;
+        $_SESSION['destination'] = $_POST['destination'];
+        $_SESSION['persons_counter'] = $_POST['persons_counter'];
+        $_SESSION['insurance'] = isset($_POST['insurance']);
 
-            return true;
-        }
-        else
-        {
-            echo "Veuillez remplir tout les champs correctement.";
-        }
+        return true;
+    }
+
+    // ou les variables existent simplement ?
+    elseif (isset($_POST['destination']) AND isset($_POST['persons_counter']))
+    {
+        print("Veuillez remplir tout les champs correctement.");
     }
 
     return false;
@@ -121,9 +119,10 @@ function main()
      * protégeant d'un rafraichissement de la page.
      */
     if (isset($_POST['reset']))
+    {
         header('Location:#');
     }
-    else if (checkForInput())
+    elseif (checkForInput())
     {
         goDetails();
     }
