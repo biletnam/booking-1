@@ -4,7 +4,7 @@
 session_start();
 
 // Déclarations et assignations des templates
-GLOBAL $TPL_HOME, $TPL_DETAILS;
+GLOBAL $TPL_HOME, $TPL_DETAILS, $TPL_VALIDATION, $TPL_CONFIRMATION;
 
 /* Les templates sont stockés dans des variables par la technique des `heredoc`
  * car cette technique protège de la corruption du texte tout en autorisant les
@@ -33,12 +33,10 @@ $TPL_HOME = <<<EOT
                 <th>Assurance annulation</th>
                 <th><input type="checkbox" name="insurance" value="checked" {$_POST['insurance']}></th>
             </tr>
-            <tr>
-                <th><button type="submit">Étape suivante</button></th>
-                <th><button type="submit" name="reset">Annuler la réservation</button></th>
-            </tr>
         </table>
-        </fieldset>
+    </fieldset>
+    <button type="submit" name="page" value="2">Étape suivante</button>
+    <button type="submit" name="reset">Annuler la réservation</button>
     </form>
 EOT;
 
@@ -51,6 +49,34 @@ $TPL_DETAILS = <<<EOT
             %table%
         </table>
     </fieldset>
+    <button type="submit">Étape suivante</button>
+    <button type="submit" name="page" value="1">Retour à la page précédente</button>
+    <button type="submit" name="reset">Annuler la réservation</button>
+    </form>
+EOT;
+
+$TPL_VALIDATION = <<<EOT
+    <h2>Validation des réservations</h2>
+
+    <form method="post">
+    <fieldset>
+        <table>
+            %table%
+        </table>
+    </fieldset>
+    <button type="submit">Étape suivante</button>
+    <button type="submit" name="page" value="2">Retour à la page précédente</button>
+    <button type="submit" name="reset">Annuler la réservation</button>
+    </form>
+EOT;
+
+$TPL_CONFIRMATION = <<<EOT
+    <h2>Confirmation des réservations</h2>
+
+    <form method="post">
+    <p>Votre demande a bien été enregistrée.</p>
+    <p>Merci de bien vouloir verser la somme de x€ sur le compte 000-000000-00</p>
+    <button type="submit" name="page" value="1">Retour à la page d'accueil</button>
     </form>
 EOT;
 
@@ -64,8 +90,8 @@ function checkForInput()
     // les variables existent *ET* ne sont pas vides ?
     if (!empty($_POST['destination']) AND !empty($_POST['persons_counter']))
     {
-        $_SESSION['destination'] = $_POST['destination'];
-        $_SESSION['persons_counter'] = $_POST['persons_counter'];
+        $_SESSION['destination'] = htmlspecialchars($_POST['destination']);
+        $_SESSION['persons_counter'] = intval($_POST['persons_counter']);
         $_SESSION['insurance'] = isset($_POST['insurance']);
 
         return true;
@@ -121,15 +147,25 @@ function main()
     if (isset($_POST['reset']))
     {
         header('Location:#');
+        die();
     }
-    elseif (checkForInput())
-    {
-        goDetails();
-    }
-    else
-    {
-        // page d'accueil
-        print($TPL_HOME);
+
+    switch ($_POST['page']) {
+        case '3':
+            break;
+
+        case '2':
+            if (checkForInput())
+            {
+                goDetails();
+                break;
+            }
+
+        case '1':
+        default:
+            // page d'accueil
+            print($TPL_HOME);
+            break;
     }
 
     return 0;
