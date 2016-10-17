@@ -109,23 +109,25 @@ function checkForm1()
  */
 function checkForm2()
 {
-    /*
     // les variables existent *ET* ne sont pas vides ?
-    if (!empty($_POST['destination']) AND !empty($_POST['persons_counter']))
+    if (!empty($_POST['fullname']) AND !empty($_POST['age']))
     {
-        $_SESSION['destination'] = htmlspecialchars($_POST['destination']);
-        $_SESSION['persons_counter'] = intval($_POST['persons_counter']);
-        $_SESSION['insurance'] = isset($_POST['insurance']);
+        // foreach bizarre, besoin de look la doc
+        foreach ($variable as $key => $value) {
+            # code...
+        }
+
+        $_SESSION['fullname'] = htmlspecialchars($_POST['fullname']);
+        $_SESSION['age'] = htmlspecialchars($_POST['age']);
 
         return true;
     }
 
     // ou les variables existent simplement ?
-    elseif (isset($_POST['destination']) AND isset($_POST['persons_counter']))
+    elseif (isset($_POST['fullname']) AND isset($_POST['age']))
     {
         print("Veuillez remplir tout les champs correctement.");
     }
-    */
 
     return false;
 }
@@ -152,7 +154,7 @@ function generateDetails()
         <tr>
             <th>Age</th>
             <th><input type="text" name="age[]"></th>
-        </tr>;
+        </tr>
 EOD;
     }
 
