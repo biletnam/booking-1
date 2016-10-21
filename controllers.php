@@ -2,21 +2,37 @@
 
 require('views.php');
 
+/**
+ * @param
+ * @return
+ */
 function ctr_home()
 {
 	vw_home();
 }
 
+/**
+ * @param
+ * @return
+ */
 function ctr_details()
 {
 	vw_details();
 }
 
+/**
+ * @param
+ * @return
+ */
 function ctr_validation()
 {
 	vw_validation();
 }
 
+/**
+ * @param
+ * @return
+ */
 function ctr_confirmation()
 {
 	vw_confirmation();

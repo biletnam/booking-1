@@ -1,5 +1,11 @@
 <?php
 
+require('./models.php');
+
+/**
+ * @param
+ * @return
+ */
 function vw_home()
 {
 	print_header();
@@ -8,6 +14,10 @@ function vw_home()
 	print_footer();
 }
 
+/**
+ * @param
+ * @return
+ */
 function vw_details()
 {
 	print_header();
@@ -16,6 +26,10 @@ function vw_details()
 	print_footer();
 }
 
+/**
+ * @param
+ * @return
+ */
 function vw_validation()
 {
 	print_header();
@@ -24,6 +38,10 @@ function vw_validation()
 	print_footer();
 }
 
+/**
+ * @param
+ * @return
+ */
 function vw_confirmation()
 {
 	print_header();
@@ -32,14 +50,22 @@ function vw_confirmation()
 	print_footer();
 }
 
+/**
+ * @param
+ * @return
+ */
 function print_header()
 {
-	print(file_get_contents('./templates/header.html') or die());
+	print(file_get_contents('./templates/header.html'));
 }
 
+/**
+ * @param
+ * @return
+ */
 function print_footer()
 {
-	print(file_get_contents('./templates/footer.html') or die());
+	print(file_get_contents('./templates/footer.html'));
 }
 
 /**
@@ -49,7 +75,9 @@ function print_footer()
  */
 function generate_home($template)
 {
-    print($template);
+	$markers = array('%destination%','%persons_counter%','%insurance%');
+	$values = array('','','');
+    print(str_replace($markers, $values, $template));
 }
 
 /**
