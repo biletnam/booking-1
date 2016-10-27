@@ -64,7 +64,7 @@ class Reservation
      */
     public function save()
     {
-        $_SESSION['reservation'] = serialize($reservation);
+        $_SESSION['reservation'] = serialize($this);
     }
 
 }
