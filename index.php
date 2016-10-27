@@ -14,36 +14,29 @@ $reservation = null;
 
 require('controllers.php');
 
-// If the user cancels its reservation, the session
-// is deleted and the homepage is displayed.
-if (isset($_POST['reset']))
-{
-    session_unset();
-    session_destroy();
-    session_regenerate_id(true);
-}
-// or resume the current session
-elseif (isset($_SESSION['reservation']))
-{
+// if the session exists then resume
+if (isset($_SESSION['reservation']))
     $reservation = unserialize($_SESSION['reservation']);
-}
 else
-{
     $reservation = new Models\Reservation();
-}
 
+// if the user cancels its reservation, the reservation is reseted to default.
+if (isset($_POST['reset']))
+    $reservation->reset();
+
+// nexus, redirect the instruction
 switch (isset($_POST['page']) ? $_POST['page'] : '1') {
     case '4':
-    	ctr_confirmation($reservation);
+        ctr_confirmation($reservation);
         break;
 
     case '3':
-    	ctr_validation($reservation);
+        ctr_validation($reservation);
         break;
 
     case '2':
         ctr_details($reservation);
-    	break;
+        break;
 
     case '1':
     default:

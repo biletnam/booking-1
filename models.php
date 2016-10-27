@@ -43,6 +43,20 @@ class Reservation
         }
     }
 
+    /**
+     * Restore all the properties by default.
+     * This method is useful to avoid the 'Trying to get property of non-object' error.
+     * @param none
+     * @return none
+     */
+    public function reset()
+    {
+        $this->destination = "";
+        $this->personsCounter = 1;
+        $this->insurance = false;
+        $this->persons = array();
+    }
+
 }
 
 ?>

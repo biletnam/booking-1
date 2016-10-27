@@ -20,7 +20,6 @@ function ctr_home($reservation)
  */
 function ctr_details($reservation)
 {
-    // ensure the datas follow the requirements
     if (check_form_home($reservation))
         vw_details($reservation);
     else
