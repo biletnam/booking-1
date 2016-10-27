@@ -2,16 +2,17 @@
 
 class Reservation
 {
-	private $destination = "";
-	private $insurance = false;
-	private $personsCounter = 1;
-	private $persons = array();
+	private $destination;
+	private $insurance;
+	private $personsCounter;
+	private $persons;
 
-	function __construct($destination, $personsCounter, $insurance)
+	function __construct()
 	{
-		$this->destination = $destination;
-		$this->personsCounter = $personsCounter;
-		$this->insurance = $insurance;
+		$this->destination = "";
+		$this->personsCounter = 1;
+		$this->insurance = false;
+		$this->persons = array();
 	}
 
 	/**
