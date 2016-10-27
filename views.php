@@ -10,10 +10,10 @@ use Models\Reservation as Reservation;
  */
 function vw_home($reservation)
 {
-	print_header();
-	$tpl_home = file_get_contents('./templates/home.html');
-	generate_home($reservation, $tpl_home);
-	print_footer();
+    print_header();
+    $tpl_home = file_get_contents('./templates/home.html');
+    generate_home($reservation, $tpl_home);
+    print_footer();
 }
 
 /**
@@ -22,10 +22,10 @@ function vw_home($reservation)
  */
 function vw_details($reservation)
 {
-	print_header();
-	$tpl_details = file_get_contents('./templates/details.html');
-	generate_details($reservation, $tpl_details);
-	print_footer();
+    print_header();
+    $tpl_details = file_get_contents('./templates/details.html');
+    generate_details($reservation, $tpl_details);
+    print_footer();
 }
 
 /**
@@ -34,10 +34,10 @@ function vw_details($reservation)
  */
 function vw_validation($reservation)
 {
-	print_header();
-	$tpl_validation = file_get_contents('./templates/validation.html');
-	generate_validation($reservation, $tpl_validation);
-	print_footer();
+    print_header();
+    $tpl_validation = file_get_contents('./templates/validation.html');
+    generate_validation($reservation, $tpl_validation);
+    print_footer();
 }
 
 /**
@@ -46,10 +46,10 @@ function vw_validation($reservation)
  */
 function vw_confirmation($reservation)
 {
-	print_header();
-	$tpl_confirmation = file_get_contents('./templates/confirmation.html');
-	generate_confirmation($reservation, $tpl_confirmation);
-	print_footer();
+    print_header();
+    $tpl_confirmation = file_get_contents('./templates/confirmation.html');
+    generate_confirmation($reservation, $tpl_confirmation);
+    print_footer();
 }
 
 /**
@@ -58,7 +58,7 @@ function vw_confirmation($reservation)
  */
 function print_header()
 {
-	print(file_get_contents('./templates/header.html'));
+    print(file_get_contents('./templates/header.html'));
 }
 
 /**
@@ -67,7 +67,7 @@ function print_header()
  */
 function print_footer()
 {
-	print(file_get_contents('./templates/footer.html'));
+    print(file_get_contents('./templates/footer.html'));
 }
 
 /**
@@ -77,8 +77,10 @@ function print_footer()
  */
 function generate_home($reservation, $template)
 {
-	$markers = array('%destination%','%personsCounter%','%insurance%');
-	$values = array('','','');
+    $markers = array('%destination%','%personsCounter%','%insurance%');
+    $values = array($reservation->destination,
+                    $reservation->personsCounter,
+                    $reservation->insurance ? 'checked' : '');
     print(str_replace($markers, $values, $template));
 }
 

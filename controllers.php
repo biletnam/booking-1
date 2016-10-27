@@ -20,6 +20,7 @@ function ctr_home($reservation)
  */
 function ctr_details($reservation)
 {
+    // ensure the datas follow the requirements
     if (check_form_home($reservation))
         vw_details($reservation);
     else
@@ -60,6 +61,9 @@ function check_form_home($reservation)
         $reservation->destination = htmlspecialchars($_POST['destination']);
         $reservation->personsCounter = intval($_POST['personsCounter']);
         $reservation->insurance = isset($_POST['insurance']);
+
+        // don't forget to save!! (-_-;)
+        $_SESSION['reservation'] = serialize($reservation);
 
         return true;
     }
