@@ -15,58 +15,31 @@ class Reservation
 	}
 
 	/**
+	 * Generic getter
 	 * @param
 	 * @return
 	 */
-	function get_destination()
+	public function __get($property)
 	{
-		return $this->destination;
+		if (property_exists($this, $property))
+		{
+			return $this->$property;
+		}
 	}
 
 	/**
+	 * Generic setter
 	 * @param
 	 * @return
 	 */
-	function set_destination($val)
+	public function __set($property, $value)
 	{
-		$this->destination = $val;
+		if (property_exists($this, $property))
+		{
+			$this->$property = $value;
+		}
 	}
 
-	/**
-	 * @param
-	 * @return
-	 */
-	function get_insurance()
-	{
-		return $this->insurance;
-	}
-
-	/**
-	 * @param
-	 * @return
-	 */
-	function set_insurance($val)
-	{
-		$this->insurance = $val;	
-	}
-
-	/**
-	 * @param
-	 * @return
-	 */
-	function get_persons_counter()
-	{
-		return $this->personsCounter;
-	}
-
-	/**
-	 * @param
-	 * @return
-	 */
-	function set_persons_counter($val)
-	{
-		$this->personsCounter = $val;
-	}
 }
 
 ?>
