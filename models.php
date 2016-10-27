@@ -57,6 +57,16 @@ class Reservation
         $this->persons = array();
     }
 
+    /**
+     * Save the current instance of Reservation to the session.
+     * @param none
+     * @return none
+     */
+    public function save()
+    {
+        $_SESSION['reservation'] = serialize($reservation);
+    }
+
 }
 
 ?>

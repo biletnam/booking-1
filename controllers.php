@@ -62,7 +62,7 @@ function check_form_home($reservation)
         $reservation->insurance = isset($_POST['insurance']);
 
         // don't forget to save!! (-_-;)
-        $_SESSION['reservation'] = serialize($reservation);
+        $reservation->save();
 
         return true;
     }
