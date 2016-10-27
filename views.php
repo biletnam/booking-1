@@ -11,7 +11,7 @@ use Models\Reservation as Reservation;
 function vw_display($reservation, $page)
 {
     pr_chunk('header');
-    $template = file_get_contents('./templates/'.$page);
+    $template = file_get_contents('./templates/'.$page.'.html');
 
     switch ($page) {
         case 'home':
