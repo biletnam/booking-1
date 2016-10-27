@@ -8,16 +8,20 @@ require('views.php');
  */
 function ctr_home()
 {
-	vw_home();
+    // not much to do here
+    vw_home();
 }
 
 /**
  * @param
  * @return
  */
-function ctr_details()
+function ctr_details($bypass)
 {
-	vw_details();
+    if (check_form_home() || $bypass)
+        vw_details();
+    else
+        ctr_home();
 }
 
 /**
@@ -26,7 +30,10 @@ function ctr_details()
  */
 function ctr_validation()
 {
-	vw_validation();
+    if (check_form_details())
+        vw_validation();
+    else
+        ctr_details(true);
 }
 
 /**
@@ -35,17 +42,17 @@ function ctr_validation()
  */
 function ctr_confirmation()
 {
-	vw_confirmation();
+    vw_confirmation();
 }
 
 /**
- * Vérifie la validité des données transmises à la page d'accueil.
+ * Check the data validity transmitted at the homepage.
  * @param none
- * @return true si les données sont valides, false autrement.
+ * @return true if the data exist and have the right datatype.
  */
 function check_form_home()
 {
-    // les variables existent *ET* ne sont pas vides ?
+    // variables exist *AND* are not empty
     if (!empty($_POST['destination']) AND !empty($_POST['persons_counter']))
     {
         $_SESSION['destination'] = htmlspecialchars($_POST['destination']);
@@ -55,7 +62,7 @@ function check_form_home()
         return true;
     }
 
-    // ou les variables existent simplement ?
+    // or the variables just exist ?
     elseif (isset($_POST['destination']) AND isset($_POST['persons_counter']))
     {
         print("Veuillez remplir tout les champs correctement.");
@@ -65,22 +72,22 @@ function check_form_home()
 }
 
 /**
- * Vérifie la validité des données transmises à la page de détails.
+ * Check the data validity transmitted at the detail page.
  * @param none
- * @return true si les données sont valides, false autrement.
+ * @return true if the data exist and have the right datatype.
  */
 function check_form_details()
 {
-    // les variables existent *ET* ne sont pas vides ?
+    // variables exist *AND* are not empty
     if (!empty($_POST['fullname']) AND !empty($_POST['age']))
     {
 
-    	//TODO
+        //TODO
 
         return true;
     }
 
-    // ou les variables existent simplement ?
+    // or the variables just exist ?
     elseif (isset($_POST['fullname']) AND isset($_POST['age']))
     {
         print("Veuillez remplir tout les champs correctement.");

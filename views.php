@@ -1,6 +1,6 @@
 <?php
 
-require('./models.php');
+require('models.php');
 
 /**
  * @param
@@ -69,7 +69,7 @@ function print_footer()
 }
 
 /**
- * Génère la page d'accueil et l'affiche.
+ * Generate and show the homepage.
  * @param none
  * @return none
  */
@@ -81,8 +81,7 @@ function generate_home($template)
 }
 
 /**
- * Complète le nombre de case nécessaires au tableau des détails
- * et affiche la page générée.
+ * Generate and show the number of text field necessary for the details page.
  * @param none
  * @return none
  */
@@ -110,7 +109,7 @@ EOD;
 }
 
 /**
- * Génère la page récapitulative de la réservation et l'affiche.
+ * Generate and show the validation page.
  * @param none
  * @return none
  */
@@ -120,7 +119,7 @@ function generate_validation($template)
 }
 
 /**
- * Génère la page de confirmation en indiquant le prix à payer et l'affiche.
+ * Generate and show the confirmation page by calculating the amount to pay.
  * @param none
  * @return none
  */

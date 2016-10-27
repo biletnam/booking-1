@@ -1,6 +1,6 @@
 <?php
 
-// Initialisation d'une session.
+// Initialize a session.
 session_start();
 
 // Quick and Dirty debugging
@@ -11,9 +11,8 @@ header('Content-Type: text/html; charset=utf-8');
 
 require('controllers.php');
 
-/* Si l'utilisateur annule sa réservation, la session est supprimée et la page d'accueil est
- * affichée. La méthode `header('Location:#')` peut sembler brutale mais c'est la seule
- * protégeant d'un rafraichissement de la page.
+/* If the user cancels its reservation, the session is deleted and the homepage is displayed.
+ * The method `header('Location:#')` may seem harsch but it's the only one refresh-proof.
  */
 if (isset($_POST['reset']))
 {
@@ -33,7 +32,7 @@ switch (isset($_POST['page']) ? $_POST['page'] : '1') {
         break;
 
     case '2':
-    	ctr_details();
+        ctr_details(false);
     	break;
 
     case '1':
