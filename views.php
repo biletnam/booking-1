@@ -2,15 +2,17 @@
 
 require('models.php');
 
+use Models\Reservation as Reservation;
+
 /**
  * @param
  * @return
  */
-function vw_home()
+function vw_home($reservation)
 {
 	print_header();
 	$tpl_home = file_get_contents('./templates/home.html');
-	generate_home($tpl_home);
+	generate_home($reservation, $tpl_home);
 	print_footer();
 }
 
@@ -18,11 +20,11 @@ function vw_home()
  * @param
  * @return
  */
-function vw_details()
+function vw_details($reservation)
 {
 	print_header();
 	$tpl_details = file_get_contents('./templates/details.html');
-	generate_details($tpl_details);
+	generate_details($reservation, $tpl_details);
 	print_footer();
 }
 
@@ -30,11 +32,11 @@ function vw_details()
  * @param
  * @return
  */
-function vw_validation()
+function vw_validation($reservation)
 {
 	print_header();
 	$tpl_validation = file_get_contents('./templates/validation.html');
-	generate_validation($tpl_validation);
+	generate_validation($reservation, $tpl_validation);
 	print_footer();
 }
 
@@ -42,11 +44,11 @@ function vw_validation()
  * @param
  * @return
  */
-function vw_confirmation()
+function vw_confirmation($reservation)
 {
 	print_header();
 	$tpl_confirmation = file_get_contents('./templates/confirmation.html');
-	generate_confirmation($tpl_confirmation);
+	generate_confirmation($reservation, $tpl_confirmation);
 	print_footer();
 }
 
@@ -73,9 +75,9 @@ function print_footer()
  * @param none
  * @return none
  */
-function generate_home($template)
+function generate_home($reservation, $template)
 {
-	$markers = array('%destination%','%persons_counter%','%insurance%');
+	$markers = array('%destination%','%personsCounter%','%insurance%');
 	$values = array('','','');
     print(str_replace($markers, $values, $template));
 }
@@ -85,11 +87,11 @@ function generate_home($template)
  * @param none
  * @return none
  */
-function generate_details($template)
+function generate_details($reservation, $template)
 {
     $table = "";
 
-    for ($i = 0; $i < intval($_SESSION['persons_counter']); $i++)
+    for ($i = 0; $i < $reservation->personsCounter; $i++)
     {
         $table .=<<<EOD
         <tr>
@@ -113,7 +115,7 @@ EOD;
  * @param none
  * @return none
  */
-function generate_validation($template)
+function generate_validation($reservation, $template)
 {
     //TODO
 }
@@ -123,7 +125,7 @@ function generate_validation($template)
  * @param none
  * @return none
  */
-function generate_confirmation($template)
+function generate_confirmation($reservation, $template)
 {
     //TODO
 }

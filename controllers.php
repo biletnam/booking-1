@@ -2,47 +2,49 @@
 
 require('views.php');
 
+use Models\Reservation as Reservation;
+
 /**
  * @param
  * @return
  */
-function ctr_home()
+function ctr_home($reservation)
 {
     // not much to do here
-    vw_home();
+    vw_home($reservation);
 }
 
 /**
  * @param
  * @return
  */
-function ctr_details($bypass)
+function ctr_details($reservation)
 {
-    if (check_form_home() || $bypass)
-        vw_details();
+    if (check_form_home($reservation))
+        vw_details($reservation);
     else
-        ctr_home();
+        ctr_home($reservation);
 }
 
 /**
  * @param
  * @return
  */
-function ctr_validation()
+function ctr_validation($reservation)
 {
-    if (check_form_details())
-        vw_validation();
+    if (check_form_details($reservation))
+        vw_validation($reservation);
     else
-        ctr_details(true);
+        ctr_details($reservation);
 }
 
 /**
  * @param
  * @return
  */
-function ctr_confirmation()
+function ctr_confirmation($reservation)
 {
-    vw_confirmation();
+    vw_confirmation($reservation);
 }
 
 /**
@@ -50,20 +52,20 @@ function ctr_confirmation()
  * @param none
  * @return true if the data exist and have the right datatype.
  */
-function check_form_home()
+function check_form_home($reservation)
 {
     // variables exist *AND* are not empty
-    if (!empty($_POST['destination']) AND !empty($_POST['persons_counter']))
+    if (!empty($_POST['destination']) AND !empty($_POST['personsCounter']))
     {
-        $_SESSION['destination'] = htmlspecialchars($_POST['destination']);
-        $_SESSION['persons_counter'] = intval($_POST['persons_counter']);
-        $_SESSION['insurance'] = isset($_POST['insurance']);
+        $reservation->destination = htmlspecialchars($_POST['destination']);
+        $reservation->personsCounter = intval($_POST['personsCounter']);
+        $reservation->insurance = isset($_POST['insurance']);
 
         return true;
     }
 
     // or the variables just exist ?
-    elseif (isset($_POST['destination']) AND isset($_POST['persons_counter']))
+    elseif (isset($_POST['destination']) AND isset($_POST['personsCounter']))
     {
         print("Veuillez remplir tout les champs correctement.");
     }
@@ -76,13 +78,13 @@ function check_form_home()
  * @param none
  * @return true if the data exist and have the right datatype.
  */
-function check_form_details()
+function check_form_details($reservation)
 {
     // variables exist *AND* are not empty
     if (!empty($_POST['fullname']) AND !empty($_POST['age']))
     {
 
-        //TODO
+        
 
         return true;
     }
