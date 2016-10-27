@@ -2,6 +2,7 @@
 
 require('views.php');
 
+use Models\Person as Person;
 use Models\Reservation as Reservation;
 
 /**
@@ -83,19 +84,38 @@ function check_form_home($reservation)
  */
 function check_form_details($reservation)
 {
-    // variables exist *AND* are not empty
-    if (!empty($_POST['fullname']) AND !empty($_POST['age']))
+    // tables exist *AND* are not empty
+    if (!empty($_POST['fullnames']) AND !empty($_POST['ages']))
     {
+        $fullnames = $_POST['fullnames'];
+        $ages = $_POST['ages'];
+        $validInput = true;
+        $persons = array();
 
-        
+        for ($i = 0; $i < count($fullnames); $i++)
+        {
+            // age is not 0 and fullname is set
+            if ($ages[$i] AND $fullnames[$i])
+            {
+                array_push($persons, new Person($fullnames[$i], $ages[$i]));
+            }
+            else
+            {
+                print("Veuillez remplir le champs ".$i." correctement.");
+                $invalidInput = false;
+            }
+        }
 
-        return true;
+        $reservation->persons = $persons;
+        $reservation->save();
+
+        return $validInput;
     }
 
     // or the variables just exist ?
     elseif (isset($_POST['fullname']) AND isset($_POST['age']))
     {
-        print("Veuillez remplir tout les champs correctement.");
+        print("Veuillez remplir tous les champs correctement.");
     }
 
     return false;
