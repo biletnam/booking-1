@@ -66,7 +66,44 @@ class Reservation
     {
         $_SESSION['reservation'] = serialize($this);
     }
+}
 
+class Person
+{
+    private $fullname;
+    private $age;
+
+    function __construct($fullname, $age)
+    {
+        $this->fullname = $fullname;
+        $this->age = $age;
+    }
+
+    /**
+     * Generic getter
+     * @param
+     * @return
+     */
+    public function __get($property)
+    {
+        if (property_exists($this, $property))
+        {
+            return $this->$property;
+        }
+    }
+
+    /**
+     * Generic setter
+     * @param
+     * @return
+     */
+    public function __set($property, $value)
+    {
+        if (property_exists($this, $property))
+        {
+            $this->$property = $value;
+        }
+    }
 }
 
 ?>
