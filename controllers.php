@@ -71,7 +71,7 @@ function check_form_home($reservation)
     // or the variables just exist ?
     elseif (isset($_POST['destination']) AND isset($_POST['personsCounter']))
     {
-        print("Veuillez remplir tout les champs correctement.");
+        print("Veuillez remplir tout les champs correctement.\n");
     }
 
     return false;
@@ -101,7 +101,7 @@ function check_form_details($reservation)
             }
             else
             {
-                print("Veuillez remplir le champs ".$i." correctement.");
+                print("Veuillez remplir le champs ".$i." correctement.\n");
                 $invalidInput = false;
             }
         }
@@ -115,7 +115,7 @@ function check_form_details($reservation)
     // or the variables just exist ?
     elseif (isset($_POST['fullname']) AND isset($_POST['age']))
     {
-        print("Veuillez remplir tous les champs correctement.");
+        print("Veuillez remplir tous les champs correctement.\n");
     }
 
     return false;
