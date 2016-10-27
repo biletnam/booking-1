@@ -12,7 +12,7 @@ use Models\Reservation as Reservation;
 function ctr_home($reservation)
 {
     // not much to do here
-    vw_home($reservation);
+    vw_display($reservation, 'home');
 }
 
 /**
@@ -22,7 +22,7 @@ function ctr_home($reservation)
 function ctr_details($reservation)
 {
     if (check_form_home($reservation))
-        vw_details($reservation);
+        vw_display($reservation, 'details');
     else
         ctr_home($reservation);
 }
@@ -34,7 +34,7 @@ function ctr_details($reservation)
 function ctr_validation($reservation)
 {
     if (check_form_details($reservation))
-        vw_validation($reservation);
+        vw_display($reservation, 'validation');
     else
         ctr_details($reservation);
 }
@@ -45,7 +45,7 @@ function ctr_validation($reservation)
  */
 function ctr_confirmation($reservation)
 {
-    vw_confirmation($reservation);
+    vw_display($reservation, 'confirmation');
 }
 
 /**

@@ -8,66 +8,39 @@ use Models\Reservation as Reservation;
  * @param
  * @return
  */
-function vw_home($reservation)
+function vw_display($reservation, $page)
 {
-    print_header();
-    $tpl_home = file_get_contents('./templates/home.html');
-    generate_home($reservation, $tpl_home);
-    print_footer();
+    pr_chunk('header');
+    $template = file_get_contents('./templates/'.$page);
+
+    switch ($page) {
+        case 'home':
+            generate_home($reservation, $template);
+            break;
+
+        case 'details':
+            generate_details($reservation, $template);
+            break;
+
+        case 'validation':
+            generate_validation($reservation, $template);
+            break;
+
+        case 'confirmation':
+            generate_confirmation($reservation, $template);
+            break;
+    }
+
+    pr_chunk('footer');
 }
 
 /**
  * @param
  * @return
  */
-function vw_details($reservation)
+function pr_chunk($chunk)
 {
-    print_header();
-    $tpl_details = file_get_contents('./templates/details.html');
-    generate_details($reservation, $tpl_details);
-    print_footer();
-}
-
-/**
- * @param
- * @return
- */
-function vw_validation($reservation)
-{
-    print_header();
-    $tpl_validation = file_get_contents('./templates/validation.html');
-    generate_validation($reservation, $tpl_validation);
-    print_footer();
-}
-
-/**
- * @param
- * @return
- */
-function vw_confirmation($reservation)
-{
-    print_header();
-    $tpl_confirmation = file_get_contents('./templates/confirmation.html');
-    generate_confirmation($reservation, $tpl_confirmation);
-    print_footer();
-}
-
-/**
- * @param
- * @return
- */
-function print_header()
-{
-    print(file_get_contents('./templates/header.html'));
-}
-
-/**
- * @param
- * @return
- */
-function print_footer()
-{
-    print(file_get_contents('./templates/footer.html'));
+    print(file_get_contents('./templates/'.$chunk.'.html'));
 }
 
 /**
