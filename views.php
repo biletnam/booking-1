@@ -5,13 +5,16 @@ require('models.php');
 use Models\Reservation as Reservation;
 
 /**
- * @param
- * @return
+ * Print the header and footer and let a generate_* function
+ * fills between them the page given in argument.
+ * @param the reservation context
+ * @param the name of the page to display
+ * @return none
  */
 function vw_display($reservation, $page)
 {
-    pr_chunk('header');
-    $template = file_get_contents('./templates/'.$page.'.html');
+    print(get_chunk('header'));
+    $template = get_chunk($page);
 
     switch ($page) {
         case 'home':
@@ -31,21 +34,23 @@ function vw_display($reservation, $page)
             break;
     }
 
-    pr_chunk('footer');
+    print(get_chunk('footer'));
 }
 
 /**
- * @param
- * @return
+ * Retrieve the content of a template file.
+ * @param the filename without extension of the html file
+ * @return the content of the html file
  */
-function pr_chunk($chunk)
+function get_chunk($chunk)
 {
-    print(file_get_contents('./templates/'.$chunk.'.html'));
+    return file_get_contents('./templates/'.$chunk.'.html');
 }
 
 /**
  * Generate and show the homepage.
- * @param none
+ * @param the reservation context
+ * @param the template content
  * @return none
  */
 function generate_home($reservation, $template)
@@ -59,7 +64,8 @@ function generate_home($reservation, $template)
 
 /**
  * Generate and show the number of text field necessary for the details page.
- * @param none
+ * @param the reservation context
+ * @param the template content
  * @return none
  */
 function generate_details($reservation, $template)
@@ -96,7 +102,8 @@ EOD;
 
 /**
  * Generate and show the validation page.
- * @param none
+ * @param the reservation context
+ * @param the template content
  * @return none
  */
 function generate_validation($reservation, $template)
@@ -125,7 +132,8 @@ EOD;
 
 /**
  * Generate and show the confirmation page by calculating the amount to pay.
- * @param none
+ * @param the reservation context
+ * @param the template content
  * @return none
  */
 function generate_confirmation($reservation, $template)

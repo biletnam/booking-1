@@ -6,8 +6,11 @@ use Models\Person as Person;
 use Models\Reservation as Reservation;
 
 /**
- * @param
- * @return
+ * Redirect the user request to the correct views but ensures first that every information
+ * required has been correctly filled is needed.
+ * @param the reservation context
+ * @param the name of page to be displayed
+ * @return none
  */
 function redirect_control($reservation, $redirection)
 {
@@ -42,7 +45,7 @@ function redirect_control($reservation, $redirection)
 
 /**
  * Check the data validity transmitted at the homepage.
- * @param none
+ * @param the reservation context
  * @return true if the data exist and have the right datatype.
  */
 function check_form_home($reservation)
@@ -71,7 +74,7 @@ function check_form_home($reservation)
 
 /**
  * Check the data validity transmitted at the detail page.
- * @param none
+ * @param the reservation context
  * @return true if the data exist and have the right datatype.
  */
 function check_form_details($reservation)

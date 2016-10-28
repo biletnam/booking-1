@@ -19,8 +19,8 @@ class Reservation
 
     /**
      * Generic getter
-     * @param
-     * @return
+     * @param the name of the property to return
+     * @return the value of the property
      */
     public function __get($property)
     {
@@ -32,8 +32,8 @@ class Reservation
 
     /**
      * Generic setter
-     * @param
-     * @return
+     * @param the name of the property to set
+     * @return none
      */
     public function __set($property, $value)
     {
@@ -82,8 +82,8 @@ class Person
 
     /**
      * Generic getter
-     * @param
-     * @return
+     * @param the name of the property to return
+     * @return the value of the property
      */
     public function __get($property)
     {
@@ -95,8 +95,8 @@ class Person
 
     /**
      * Generic setter
-     * @param
-     * @return
+     * @param the name of the property to set
+     * @return none
      */
     public function __set($property, $value)
     {
