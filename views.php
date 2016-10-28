@@ -107,15 +107,15 @@ function generate_validation($reservation, $template)
     {
         $x = $reservation->persons[$i]->fullname;
         $y = $reservation->persons[$i]->age;
-        
+
         $tables .=<<<EOD
         <tr>
             <th>Nom</th>
-            <th><input type="text" name="fullnames[]" value="$x" readonly></th>
+            <th>$x</th>
         </tr>
         <tr>
             <th>Age</th>
-            <th><input type="text" name="ages[]" value="$y" readonly></th>
+            <th>$y</th>
         </tr>
 EOD;
     }
@@ -130,7 +130,22 @@ EOD;
  */
 function generate_confirmation($reservation, $template)
 {
-    //TODO
+    $amount = 0;
+
+    if ($reservation->insurance)
+        $amount += 20;
+
+    $persons = $reservation->persons;
+    for ($i = 0; $i < $reservation->personsCounter; $i++)
+    {
+        if ($persons[$i]->age <= 12)
+            $amount += 10;
+        else
+            $amount += 15;
+    }
+
+    $textfield = "<p>Merci de bien vouloir verser la somme de ".$amount."€ sur le compte 000-000000-00</p>";
+    print(str_replace('%amount%', $textfield, $template));
 }
 
 ?>
