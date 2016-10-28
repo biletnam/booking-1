@@ -16,23 +16,13 @@ function vw_display($reservation, $page)
     print(get_chunk('header'));
     $template = get_chunk($page);
 
-    switch ($page) {
-        case 'home':
-            generate_home($reservation, $template);
-            break;
+    // this is a array of function (^з^)-☆
+    $fcts =  array('home'         => 'generate_home',
+                   'details'      => 'generate_details',
+                   'validation'   => 'generate_validation',
+                   'confirmation' => 'generate_confirmation');
 
-        case 'details':
-            generate_details($reservation, $template);
-            break;
-
-        case 'validation':
-            generate_validation($reservation, $template);
-            break;
-
-        case 'confirmation':
-            generate_confirmation($reservation, $template);
-            break;
-    }
+    call_user_func($fcts[$page], $reservation, $template);
 
     print(get_chunk('footer'));
 }
