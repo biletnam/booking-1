@@ -17,10 +17,10 @@ function vw_display($reservation, $page)
     $template = get_chunk($page);
 
     // this is a array of function (^з^)-☆
-    $fcts =  array('home'         => 'generate_home',
-                   'details'      => 'generate_details',
-                   'validation'   => 'generate_validation',
-                   'confirmation' => 'generate_confirmation');
+    $fcts = array('home'         => 'generate_home',
+                  'details'      => 'generate_details',
+                  'validation'   => 'generate_validation',
+                  'confirmation' => 'generate_confirmation');
 
     call_user_func($fcts[$page], $reservation, $template);
 
