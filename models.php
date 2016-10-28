@@ -55,6 +55,7 @@ class Reservation
         $this->personsCounter = 1;
         $this->insurance = false;
         $this->persons = array();
+        $this->save();
     }
 
     /**
