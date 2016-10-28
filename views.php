@@ -101,7 +101,26 @@ EOD;
  */
 function generate_validation($reservation, $template)
 {
-    //TODO
+    $tables = "";
+
+    for ($i = 0; $i < $reservation->personsCounter; $i++)
+    {
+        $x = $reservation->persons[$i]->fullname;
+        $y = $reservation->persons[$i]->age;
+        
+        $tables .=<<<EOD
+        <tr>
+            <th>Nom</th>
+            <th><input type="text" name="fullnames[]" value="$x" readonly></th>
+        </tr>
+        <tr>
+            <th>Age</th>
+            <th><input type="text" name="ages[]" value="$y" readonly></th>
+        </tr>
+EOD;
+    }
+
+    print(str_replace('%table%', $tables, $template));
 }
 
 /**
