@@ -60,22 +60,19 @@ function generate_home($reservation, $template)
  */
 function generate_details($reservation, $template)
 {
-    $tables = "";
-    $x = $y = ""; // fullname and age
+    $table = "";
 
     for ($i = 0; $i < $reservation->personsCounter; $i++)
     {
+        $x = $y = ""; // fullname and age
+
         if (isset($reservation->persons[$i]))
         {
             $x = $reservation->persons[$i]->fullname;
             $y = $reservation->persons[$i]->age;
         }
-        else
-        {
-            $x = $y = "";
-        }
 
-        $tables .=<<<EOD
+        $table .=<<<EOD
         <tr>
             <th>Nom</th>
             <th><input type="text" name="fullnames[]" value="$x"></th>
@@ -87,7 +84,7 @@ function generate_details($reservation, $template)
 EOD;
     }
 
-    print(str_replace('%table%', $tables, $template));
+    print(str_replace('%table%', $table, $template));
 }
 
 /**
