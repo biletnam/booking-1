@@ -23,14 +23,14 @@ function redirect_control($reservation, $redirection)
             if (check_form_home($reservation))
                 vw_display($reservation, $redirection);
             else
-                ctr_home($reservation);
+                redirect_control($reservation, $redirection);
             break;
 
         case 'validation':
             if (check_form_details($reservation))
                 vw_display($reservation, $redirection);
             else
-                ctr_details($reservation);
+                redirect_control($reservation, $redirection);
             break;
 
         case 'confirmation':
