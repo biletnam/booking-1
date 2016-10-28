@@ -7,7 +7,7 @@ use Models\Reservation as Reservation;
 
 /**
  * Redirect the user request to the correct views but ensures first that every information
- * required has been correctly filled is needed.
+ * required has been correctly filled is needed. Otherwise, redirect to the form.
  * @param the reservation context
  * @param the name of page to be displayed
  * @return none
