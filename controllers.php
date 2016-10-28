@@ -6,8 +6,8 @@ use Models\Person as Person;
 use Models\Reservation as Reservation;
 
 /**
- * Redirect the user request to the correct views but ensures first that every information
- * required has been correctly filled is needed. Otherwise, redirect to the form.
+ * Redirect the user request to the correct views but ensures first that every informations
+ * required has been correctly filled if needed. Otherwise, redirect to the form.
  * @param the reservation context
  * @param the name of page to be displayed
  * @return none
@@ -55,20 +55,20 @@ function check_form_home($reservation)
     if (!empty($_POST['destination']) AND !empty($_POST['personsCounter']))
     {
         $reservation->destination = htmlspecialchars($_POST['destination']);
-        $reservation->personsCounter = intval($_POST['personsCounter']);
         $reservation->insurance = isset($_POST['insurance']);
 
-        // don't forget to save!! (-_-;)
-        $reservation->save();
+        $personsCounter = intval($_POST['personsCounter']);
+        if (1 <= $personsCounter AND $personsCounter <= 30)
+        {
+            $reservation->personsCounter = $personsCounter;
+            $reservation->save(); // don't forget to save!! (-_-;)
 
-        return true;
+            return true;
+        }
+
     }
 
-    // or the variables just exist ?
-    elseif (isset($_POST['destination']) AND isset($_POST['personsCounter']))
-    {
-        print("Veuillez remplir tout les champs correctement.\n");
-    }
+    print("Veuillez remplir tous les champs correctement.\n");
 
     return false;
 }
@@ -104,11 +104,7 @@ function check_form_details($reservation)
         return $count == count($persons);
     }
 
-    // or the variables just exist ?
-    elseif (isset($_POST['fullname']) AND isset($_POST['age']))
-    {
-        print("Veuillez remplir tous les champs correctement.\n");
-    }
+    print("Veuillez remplir tous les champs correctement.\n");
 
     return false;
 }
