@@ -16,7 +16,7 @@ function vw_display($reservation, $page)
     print(get_chunk('header'));
     $template = get_chunk($page);
 
-    // this is a array of function (^з^)-☆
+    // this is an array of function (^з^)-☆
     $fcts = array('home'         => 'generate_home',
                   'details'      => 'generate_details',
                   'validation'   => 'generate_validation',
