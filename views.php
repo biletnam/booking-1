@@ -56,9 +56,9 @@ function get_chunk($chunk)
 function generate_home($reservation, $template)
 {
     $markers = array('%destination%','%personsCounter%','%insurance%');
-    $values = array($reservation->destination,
-                    $reservation->personsCounter,
-                    $reservation->insurance ? 'checked' : '');
+    $values  = array($reservation->destination,
+                     $reservation->personsCounter,
+                    !$reservation->insurance ?: 'checked');
     print(str_replace($markers, $values, $template));
 }
 

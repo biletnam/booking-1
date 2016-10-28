@@ -11,10 +11,10 @@ class Reservation
 
     function __construct()
     {
-        $this->destination = "";
+        $this->destination    = "";
         $this->personsCounter = 1;
-        $this->insurance = false;
-        $this->persons = array();
+        $this->insurance      = false;
+        $this->persons        = array();
     }
 
     /**
@@ -51,10 +51,10 @@ class Reservation
      */
     public function reset()
     {
-        $this->destination = "";
+        $this->destination    = "";
         $this->personsCounter = 1;
-        $this->insurance = false;
-        $this->persons = array();
+        $this->insurance      = false;
+        $this->persons        = array();
         $this->save();
     }
 
@@ -76,8 +76,8 @@ class Person
 
     function __construct($fullname, $age)
     {
-        $this->fullname = $fullname;
-        $this->age = $age;
+        $this->fullname = htmlspecialchars($fullname);
+        $this->age      = htmlspecialchars($age);
     }
 
     /**
