@@ -134,17 +134,15 @@ function generate_confirmation($reservation, $template)
     if ($reservation->insurance)
         $amount += INSURANCE;
 
-    $persons = $reservation->persons;
     for ($i = 0; $i < $reservation->personsCounter; $i++)
     {
-        if ($persons[$i]->age <= 12)
+        if ($reservation->persons[$i]->age <= 12)
             $amount += CHILD_PRICE;
         else
             $amount += ADULT_PRICE;
     }
 
-    $textfield = "<p>Merci de bien vouloir verser la somme de ".$amount."€ sur le compte 000-000000-00</p>";
-    print(str_replace('%amount%', $textfield, $template));
+    print(str_replace('%amount%', $amount, $template));
 }
 
 ?>
