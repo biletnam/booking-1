@@ -24,25 +24,11 @@ else
 if (isset($_POST['reset']))
     $reservation->reset();
 
-// nexus, redirect the instruction
-switch (isset($_POST['page']) ? $_POST['page'] : '1') {
-    case '4':
-        ctr_confirmation($reservation);
-        break;
-
-    case '3':
-        ctr_validation($reservation);
-        break;
-
-    case '2':
-        ctr_details($reservation);
-        break;
-
-    case '1':
-    default:
-        ctr_home($reservation);
-        break;
-}
+// starter, redirect the instruction to the adequate controller
+if (!empty($_POST['page']))
+    redirect_control($reservation, $_POST['page']);
+else
+    redirect_control($reservation, 'home');
 
 return 0;
 

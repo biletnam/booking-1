@@ -9,43 +9,35 @@ use Models\Reservation as Reservation;
  * @param
  * @return
  */
-function ctr_home($reservation)
+function redirect_control($reservation, $redirection)
 {
-    // not much to do here
-    vw_display($reservation, 'home');
-}
+    switch ($redirection) {
+        case 'home':
+            vw_display($reservation, $redirection);
+            break;
 
-/**
- * @param
- * @return
- */
-function ctr_details($reservation)
-{
-    if (check_form_home($reservation))
-        vw_display($reservation, 'details');
-    else
-        ctr_home($reservation);
-}
+        case 'details':
+            if (check_form_home($reservation))
+                vw_display($reservation, $redirection);
+            else
+                ctr_home($reservation);
+            break;
 
-/**
- * @param
- * @return
- */
-function ctr_validation($reservation)
-{
-    if (check_form_details($reservation))
-        vw_display($reservation, 'validation');
-    else
-        ctr_details($reservation);
-}
+        case 'validation':
+            if (check_form_details($reservation))
+                vw_display($reservation, $redirection);
+            else
+                ctr_details($reservation);
+            break;
 
-/**
- * @param
- * @return
- */
-function ctr_confirmation($reservation)
-{
-    vw_display($reservation, 'confirmation');
+        case 'confirmation':
+            vw_display($reservation, $redirection);
+            break;
+
+        default:
+            // how did you get here?
+            var_dump($redirection);
+    }
 }
 
 /**
