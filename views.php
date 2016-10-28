@@ -125,18 +125,22 @@ EOD;
  */
 function generate_confirmation($reservation, $template)
 {
+    define('INSURANCE', 20);
+    define('CHILD_PRICE', 10);
+    define('ADULT_PRICE', 15);
+
     $amount = 0;
 
     if ($reservation->insurance)
-        $amount += 20;
+        $amount += INSURANCE;
 
     $persons = $reservation->persons;
     for ($i = 0; $i < $reservation->personsCounter; $i++)
     {
         if ($persons[$i]->age <= 12)
-            $amount += 10;
+            $amount += CHILD_PRICE;
         else
-            $amount += 15;
+            $amount += ADULT_PRICE;
     }
 
     $textfield = "<p>Merci de bien vouloir verser la somme de ".$amount."€ sur le compte 000-000000-00</p>";
