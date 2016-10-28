@@ -35,6 +35,7 @@ function redirect_control($reservation, $redirection)
 
         case 'confirmation':
             vw_display($reservation, $redirection);
+            $reservation->reset();
             break;
 
         default:
