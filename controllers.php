@@ -83,8 +83,8 @@ function check_form_details($reservation)
     // tables exist *AND* are not empty
     if (!empty($_POST['fullnames']) AND !empty($_POST['ages']))
     {
-        $ages = $_POST['ages'];
-        $fullnames = $_POST['fullnames'];
+        $ages = htmlspecialchars($_POST['ages']);
+        $fullnames = htmlspecialchars($_POST['fullnames']);
         $persons = array();
         $count = count($fullnames);
 
