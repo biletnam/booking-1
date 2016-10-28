@@ -14,34 +14,30 @@ use Models\Reservation as Reservation;
  */
 function redirect_control($reservation, $redirection)
 {
-    switch ($redirection) {
-        case 'home':
+    $fcts = array(
+      'home' => function($reservation, $redirection) {
             vw_display($reservation, $redirection);
-            break;
+       },
 
-        case 'details':
-            if (check_form_home($reservation))
-                vw_display($reservation, $redirection);
-            else
-                redirect_control($reservation, $redirection);
-            break;
+       'details' => function($reservation, $redirection) {
+            if (!check_form_home($reservation)) // if the information are incorrect,
+                $redirection = 'home';          // return to the previous page.
+            vw_display($reservation, $redirection);
+       },
 
-        case 'validation':
-            if (check_form_details($reservation))
-                vw_display($reservation, $redirection);
-            else
-                redirect_control($reservation, $redirection);
-            break;
+       'validation' => function($reservation, $redirection) {
+            if (!check_form_details($reservation)) // if the information are incorrect,
+                $redirection = 'details';          // return to the previous page.
+            vw_display($reservation, $redirection);
+       },
 
-        case 'confirmation':
+       'confirmation' => function($reservation, $redirection) {
             vw_display($reservation, $redirection);
             $reservation->reset();
-            break;
+       }
+    );
 
-        default:
-            // how did you get here?
-            var_dump($redirection);
-    }
+    call_user_func_array($fcts[$redirection], array($reservation, $redirection));
 }
 
 /**
@@ -56,14 +52,19 @@ function check_form_home($reservation)
     {
         $reservation->destination = htmlspecialchars($_POST['destination']);
         $reservation->insurance = isset($_POST['insurance']);
-
         $personsCounter = intval($_POST['personsCounter']);
+
+        // fix bounds to the number of persons
         if (1 <= $personsCounter AND $personsCounter <= 30)
         {
             $reservation->personsCounter = $personsCounter;
             $reservation->save(); // don't forget to save!! (-_-;)
 
             return true;
+        }
+        else
+        {
+            print("Vous ne pouvez enregistrer que entre 1 et 30 personnes.\n");
         }
 
     }
@@ -94,7 +95,7 @@ function check_form_details($reservation)
             if ($ages[$i] AND $fullnames[$i])
                 array_push($persons, new Person($fullnames[$i], $ages[$i]));
             else
-                print("Veuillez remplir le champs ".$i." correctement.\n");
+                print("Veuillez remplir le champs ".($i+1)." correctement.\n");
         }
 
         $reservation->persons = $persons;
