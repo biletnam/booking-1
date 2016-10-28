@@ -87,29 +87,25 @@ function check_form_details($reservation)
     // tables exist *AND* are not empty
     if (!empty($_POST['fullnames']) AND !empty($_POST['ages']))
     {
-        $fullnames = $_POST['fullnames'];
-        $ages = $_POST['ages'];
-        $validInput = true;
         $persons = array();
+        $ages = $_POST['ages'];
+        $count = count($fullnames);
+        $fullnames = $_POST['fullnames'];
 
-        for ($i = 0; $i < count($fullnames); $i++)
+        for ($i = 0; $i < $count; $i++)
         {
             // age is not 0 and fullname is set
             if ($ages[$i] AND $fullnames[$i])
-            {
                 array_push($persons, new Person($fullnames[$i], $ages[$i]));
-            }
             else
-            {
                 print("Veuillez remplir le champs ".$i." correctement.\n");
-                $invalidInput = false;
-            }
         }
 
         $reservation->persons = $persons;
         $reservation->save();
 
-        return $validInput;
+        // check if every fullname+age has an object in $persons
+        return $count == count($persons);
     }
 
     // or the variables just exist ?
