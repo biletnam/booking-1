@@ -1,11 +1,11 @@
 <h2>Détail des réservations</h2>
+<p>Veuillez communiquer le nom complet ainsi que l'âge des participants.</p>
 <form method="post">
-<fieldset>
     <table>
         %table%
     </table>
-</fieldset>
-<button type="submit" name="page" value="validation">Étape suivante</button>
-<button type="submit" name="page" value="home">Retour à la page précédente</button>
-<button type="submit" name="reset">Annuler la réservation</button>
+<button hidden type="submit" name="page" value="validation"></button><!-- trick for pressing enter -->
+<button class="button1" type="submit" name="page" value="home">&#8592; Précédent</button>
+<button class="button1" type="submit" name="page" value="validation">Suivant &#8594;</button>
+<button class="button2" type="submit" name="reset">Annuler</button>
 </form>
