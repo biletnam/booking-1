@@ -44,8 +44,7 @@ form {
     overflow-x: auto;
 }
 
-.button1 {
-    background-color: rgb(70,141,241);
+.button {
     border: none;
     color: white;
     padding: 10px 23px;
@@ -56,16 +55,12 @@ form {
     margin-top: 10px;
 }
 
-.button2 {
+.button-nav {
+    background-color: rgb(70,141,241);
+}
+
+.button-cancel {
     background-color: rgb(198,89,66);
-    border: none;
-    color: white;
-    padding: 10px 23px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-top: 10px;
 }
 
 input {
