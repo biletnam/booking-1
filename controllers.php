@@ -54,7 +54,7 @@ function check_form_home($reservation)
         $reservation->insurance = isset($_POST['insurance']);
         $personsCounter = intval($_POST['personsCounter']);
 
-        // fix bounds to the number of persons
+        // set bounds to the number of persons
         if (1 <= $personsCounter AND $personsCounter <= 30)
         {
             $reservation->personsCounter = $personsCounter;
