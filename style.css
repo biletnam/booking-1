@@ -21,9 +21,8 @@ tr {
 }
 
 th, td {
-    padding: 10px;
+    padding: 5px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
 p {
@@ -47,6 +46,7 @@ form {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    margin-top: 10px;
 }
 
 .button2 {
@@ -58,6 +58,7 @@ form {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    margin-top: 10px;
 }
 
 input {
