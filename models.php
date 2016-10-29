@@ -8,6 +8,7 @@ class Reservation
     private $insurance;
     private $personsCounter;
     private $persons;
+    private $warning;
 
     function __construct()
     {
@@ -15,6 +16,7 @@ class Reservation
         $this->personsCounter = 1;
         $this->insurance      = false;
         $this->persons        = array();
+        $this->warning        = "";
     }
 
     /**
@@ -55,6 +57,7 @@ class Reservation
         $this->personsCounter = 1;
         $this->insurance      = false;
         $this->persons        = array();
+        $this->warning        = "";
         $this->save();
     }
 
@@ -66,6 +69,28 @@ class Reservation
     public function save()
     {
         $_SESSION['reservation'] = serialize($this);
+    }
+
+    /**
+     * Append every warning message to a single string that will be used
+     * to warn the user about inadequate informations.
+     * @param the message to append to warnings
+     * @return none
+     */
+    public function append_warning($message)
+    {
+        $this->warning .= $message;
+    }
+
+    /**
+     * Clean the warning string and save it.
+     * @param none
+     * @return none
+     */
+    public function reset_warning()
+    {
+        $this->warning = "";
+        $this->save();
     }
 }
 

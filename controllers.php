@@ -64,12 +64,12 @@ function check_form_home($reservation)
         }
         else
         {
-            print("Vous ne pouvez enregistrer que entre 1 et 30 personnes.\n");
+            $reservation->append_warning("Vous ne pouvez enregistrer que entre 1 et 30 personnes.\n");
         }
 
     }
 
-    print("Veuillez remplir tous les champs correctement.\n");
+    $reservation->append_warning("Veuillez remplir tous les champs correctement.\n");
 
     return false;
 }
@@ -95,7 +95,7 @@ function check_form_details($reservation)
             if ($ages[$i] AND $fullnames[$i])
                 array_push($persons, new Person($fullnames[$i], $ages[$i]));
             else
-                print("Veuillez remplir le champs ".($i+1)." correctement.\n");
+                $reservation->append_warning("Veuillez remplir le champs ".($i+1)." correctement.\n");
         }
 
         $reservation->persons = $persons;
@@ -105,7 +105,7 @@ function check_form_details($reservation)
         return $count == count($persons);
     }
 
-    print("Veuillez remplir tous les champs correctement.\n");
+    $reservation->append_warning("Veuillez remplir tous les champs correctement.\n");
 
     return false;
 }
