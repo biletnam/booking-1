@@ -66,7 +66,6 @@ function check_form_home($reservation)
         {
             $reservation->append_warning("Vous ne pouvez enregistrer que entre 1 et 30 personnes.\n");
         }
-
     }
 
     $reservation->append_warning("Veuillez remplir tous les champs correctement.\n");
@@ -91,11 +90,11 @@ function check_form_details($reservation)
 
         for ($i = 0; $i < $count; $i++)
         {
-            // age is not 0 and fullname is set
-            if ($ages[$i] AND $fullnames[$i])
+            // age in [1;120] and fullname is set
+            if (1 <= $ages[$i] AND $ages[$i] <= 120 AND $fullnames[$i])
                 array_push($persons, new Person($fullnames[$i], $ages[$i]));
             else
-                $reservation->append_warning("Veuillez remplir le champs ".($i+1)." correctement.\n");
+                $reservation->append_warning("Veuillez remplir le participant ".($i+1)." correctement.\n");
         }
 
         $reservation->persons = $persons;
