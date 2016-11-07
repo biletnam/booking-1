@@ -20,8 +20,8 @@ function redirect_control($reservation, $redirection)
         },
 
         'details' => function($reservation, $redirection) {
-            if (!check_form_home($reservation)) // if the information are incorrect,
-                $redirection = 'home';          // return to the previous page.
+            if (!check_form_home($reservation) AND empty($reservation->persons))
+                $redirection = 'home';             // return to the previous page.
             vw_display($reservation, $redirection);
         },
 
@@ -92,16 +92,20 @@ function check_form_details($reservation)
         {
             // age in [1;120] and fullname is set
             if (1 <= $ages[$i] AND $ages[$i] <= 120 AND $fullnames[$i])
+            {
                 array_push($persons, new Person($fullnames[$i], $ages[$i]));
+            }
             else
-                $reservation->append_warning("Veuillez remplir le participant ".($i+1)." correctement.\n");
+            {
+                $reservation->append_warning("Veuillez remplir le(s) participant(s) correctement.\n");
+                return false;
+            }
         }
 
         $reservation->persons = $persons;
         $reservation->save();
-
-        // check if every fullname+age has an object in $persons
-        return $count == count($persons);
+        
+        return true;
     }
 
     $reservation->append_warning("Veuillez remplir tous les champs correctement.\n");
