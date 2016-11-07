@@ -102,7 +102,7 @@ class Person
     function __construct($fullname, $age)
     {
         $this->fullname = htmlspecialchars($fullname);
-        $this->age      = htmlspecialchars($age);
+        $this->age      = intval($age);
     }
 
     /**

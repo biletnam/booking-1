@@ -68,7 +68,7 @@ function check_form_home($reservation)
         }
     }
 
-    if (empty($reservation->persons))
+    if (count($reservation->persons) != 0)
         return true; // we're coming from the next page and the datas are corrects
 
     $reservation->append_warning("Veuillez remplir tous les champs correctement.\n");
