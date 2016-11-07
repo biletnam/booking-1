@@ -20,7 +20,7 @@ function redirect_control($reservation, $redirection)
         },
 
         'details' => function($reservation, $redirection) {
-            if (!check_form_home($reservation) AND empty($reservation->persons))
+            if (!check_form_home($reservation))    // if the informations are incorrect,
                 $redirection = 'home';             // return to the previous page.
             vw_display($reservation, $redirection);
         },
@@ -68,6 +68,9 @@ function check_form_home($reservation)
         }
     }
 
+    if (empty($reservation->persons))
+        return true; // we're coming from the next page and the datas are corrects
+
     $reservation->append_warning("Veuillez remplir tous les champs correctement.\n");
 
     return false;
@@ -85,10 +88,9 @@ function check_form_details($reservation)
     {
         $ages      = $_POST['ages'];
         $fullnames = $_POST['fullnames'];
-        $count     = count($fullnames);
         $persons   = array();
 
-        for ($i = 0; $i < $count; $i++)
+        for ($i = 0; $i < count($fullnames); $i++)
         {
             // age in [1;120] and fullname is set
             if (1 <= $ages[$i] AND $ages[$i] <= 120 AND $fullnames[$i])
