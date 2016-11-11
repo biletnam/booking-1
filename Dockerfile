@@ -1,4 +1,3 @@
-#
 # Build with: docker build -t lamp .
 #   Run with: docker run -itp 80:80 lamp
 
@@ -6,16 +5,17 @@ FROM ubuntu:latest
 MAINTAINER Alexis Nootens <me@axn.io>
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV MYSQL_PWD root
 
 WORKDIR /
 
-RUN mkdir -p opt/mysql/mysql opt/mysql/mysql/data
+RUN mkdir -p opt/mysql/mysql opt/mysql/mysql/data var/www/app
 
 # Because stdin is closed, every password prompts will be answered with 'root'
 RUN echo 'mysql-server-5.7 mysql-server/root_password password root' | debconf-set-selections && \
     echo 'mysql-server-5.7 mysql-server/root_password_again password root' | debconf-set-selections && \
     apt-get -qq update && \
-    apt-get -qq install apt-utils apache2 mysql-server-5.7 php7.0 libapache2-mod-php7.0 > /dev/null && \
+    apt-get -qq install apache2 mysql-server-5.7 php7.0 libapache2-mod-php7.0 > /dev/null && \
     mysqld --initialize \
            --explicit_defaults_for_timestamp \
            --basedir=/opt/mysql/mysql \
@@ -24,7 +24,7 @@ RUN echo 'mysql-server-5.7 mysql-server/root_password password root' | debconf-s
 # Fix apache AH00558
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Fix mysql no $HOME
+# Fix mysql no home
 RUN usermod -d /var/lib/mysql/ mysql
 
 RUN echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | debconf-set-selections && \
@@ -42,7 +42,6 @@ RUN echo 'phpmyadmin phpmyadmin/dbconfig-install boolean true' | debconf-set-sel
 # Fix mysql bug #16102788 — commit 3d8b4570d1a9d8d03d32e4cd6705b6a2d354e992
 # Since mysql 5.7, an empty port cause an error and phpmyadmin still uses an empty
 # port to connect thus being unable to create the phpmyadmin database in mysql
-ENV MYSQL_PWD root
 RUN service mysql start && \
     mysql -e "CREATE DATABASE phpmyadmin;" && \
     mysql --database=phpmyadmin < /usr/share/phpmyadmin/sql/create_tables.sql && \
@@ -55,7 +54,6 @@ RUN cat /etc/phpmyadmin/apache.conf >> /etc/apache2/apache2.conf
 
 # Apache DocumentRoot
 RUN sed -i 's/html/app/g' /etc/apache2/sites-available/000-default.conf
-COPY . /var/www/app
 
 EXPOSE 80 443
 CMD service mysql start && apachectl start && tail -f /var/log/apache2/access.log
