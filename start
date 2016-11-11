@@ -1,15 +1,15 @@
 #!/bin/sh
 
 run() {
-	docker run -it -p 80:80 -v $(PWD):/var/www/app lamp
+    docker run -it -p 80:80 -v $(PWD):/var/www/app lamp
 }
 
 setup() {
-	docker build -t lamp $(PWD)
+    docker build -t lamp $(PWD)
 }
 
 remove() {
-	docker rmi -f lamp
+    docker rmi -f lamp
 }
 
 echo "Launcher script:"
@@ -22,11 +22,11 @@ case $i in
     shift
     ;;
     -r|--remove)
-    run
+    remove
     ;;
 esac
 done
 
 if [[ $# -eq 0 ]]; then
-	run
+    run
 fi
