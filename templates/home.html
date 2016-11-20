@@ -6,7 +6,7 @@ Le prix de l'assurance annulation est de 20€ quel que soit le nombre de voyage
     <table>
         <tr>
             <th>Destination</th>
-            <th><select name="destination">
+            <th><select name="destination" required>
                     <option value="%destination%" selected>%destination%</option>
                     <option value="Paris">Paris</option>
                     <option value="Calcuta">Calcuta</option>
@@ -19,7 +19,7 @@ Le prix de l'assurance annulation est de 20€ quel que soit le nombre de voyage
         </tr>
         <tr>
             <th>Nombre de places</th>
-            <th><input type="text" name="personsCounter" value="%personsCounter%"></th>
+            <th><input type="number" name="personsCounter" value="%personsCounter%" min="1" max="30" required></th>
         </tr>
         <tr>
             <th>Assurance annulation</th>

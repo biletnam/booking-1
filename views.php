@@ -87,11 +87,11 @@ function generate_details($reservation, $template)
         $table .=<<<EOD
         <tr>
             <th>Nom</th>
-            <th><input type="text" name="fullnames[]" value="$x"></th>
+            <th><input type="text" name="fullnames[]" value="$x" required></th>
         </tr>
         <tr>
             <th>Age</th>
-            <th><input type="text" name="ages[]" value="$y"></th>
+            <th><input type="number" name="ages[]" value="$y" min="1" max="120" required></th>
         </tr>
 EOD;
     }
