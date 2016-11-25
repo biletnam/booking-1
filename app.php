@@ -13,7 +13,7 @@ ini_set('display_errors', 1);
 session_start();
 
 // include middleware
-require('router.php');
+require('web/router.php');
 
 // ensure MySQL is ready to rocks
 create_db() and $_SESSION['db_created'] = true;
