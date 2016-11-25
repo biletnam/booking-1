@@ -31,8 +31,15 @@ function redirect_control($reservation, $redirection)
         'confirmation' => function($reservation, $redirection) {
             vw_display($reservation, $redirection);
             $reservation->reset();
+        },
+
+        '404' => function($reservation, $redirection) {
+            vw_display($reservation, $redirection); // 404 — page not found
         }
     );
+
+    if (!array_key_exists($redirection, $fcts))
+        $redirection = '404';
 
     call_user_func_array($fcts[$redirection], array($reservation, $redirection));
 }

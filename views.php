@@ -17,7 +17,8 @@ function vw_display($reservation, $page)
     $template = get_chunk($page);
 
     // this is an array of function (^з^)-☆
-    $fcts = array('home'         => 'generate_home',
+    $fcts = array('404'          => 'display_404',
+                  'home'         => 'generate_home',
                   'details'      => 'generate_details',
                   'validation'   => 'generate_validation',
                   'confirmation' => 'generate_confirmation');
@@ -35,6 +36,17 @@ function vw_display($reservation, $page)
 function get_chunk($chunk)
 {
     return file_get_contents('./templates/'.$chunk.'.html');
+}
+
+/**
+ * Display the http 404 error page.
+ * @param the filename without extension of the html file
+ * @return the content of the html file
+ */
+function display_404($reservation, $template)
+{
+    // just ツ
+    print($template);
 }
 
 /**
