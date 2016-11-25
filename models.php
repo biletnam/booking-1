@@ -8,7 +8,7 @@ class Reservation
     private $insurance;
     private $personsCounter;
     private $persons;
-    private $warning;
+    private $warning; // <- not persistent in db
 
     function __construct()
     {

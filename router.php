@@ -29,6 +29,7 @@ function redirect_control($reservation, $redirection)
         },
 
         'confirmation' => function($reservation, $redirection) {
+            save_in_db($reservation);
             vw_display($reservation, $redirection);
             $reservation->reset();
         },

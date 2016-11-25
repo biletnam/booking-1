@@ -1,5 +1,11 @@
 <?php
 
+// Custom configuration
+define('MYSQL_USER', 'root');
+define('MYSQL_PASS', 'root');
+define('MYSQL_HOST', 'localhost');
+define('MYSQL_DB', 'booking');
+
 // Initialize a session.
 session_start();
 
@@ -9,7 +15,7 @@ ini_set('display_errors', 1);
 
 header('Content-Type: text/html; charset=utf-8');
 
-// Init state of reservation
+// init state of reservation
 $reservation = null;
 
 // include middleware
