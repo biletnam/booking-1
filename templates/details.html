@@ -1,12 +1,11 @@
 <h2>Détail des réservations</h2>
 %warning%
 <p>Veuillez communiquer le nom complet ainsi que l'âge des participants.</p>
-<form method="post">
+<form method="post" action="validation">
     <table>
         %table%
     </table>
-<button hidden type="submit" name="page" value="validation"></button><!-- trick for pressing enter -->
-<button class="button button-nav" type="submit" name="page" value="home">&#8592; Précédent</button>
-<button class="button button-nav" type="submit" name="page" value="validation">Suivant &#8594;</button>
-<button class="button button-cancel" type="submit" name="reset">Annuler</button>
+<a href="/"><button class="button button-nav" type="button">&#8592; Précédent</button></a>
+<button class="button button-nav" type="submit">Suivant &#8594;</button>
+<button class="button button-cancel" type="submit" name="reset" formaction="/" formnovalidate>Annuler</button>
 </form>

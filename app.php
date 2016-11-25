@@ -12,7 +12,8 @@ header('Content-Type: text/html; charset=utf-8');
 // Init state of reservation
 $reservation = null;
 
-require('controllers.php');
+// include middleware
+require('router.php');
 
 // if the session exists then resume
 if (isset($_SESSION['reservation']))
@@ -22,11 +23,14 @@ else
 
 // if the user cancels its reservation, the reservation is reseted to default.
 if (isset($_POST['reset']))
+{
     $reservation->reset();
+    unset($_GET['page']);
+}
 
-// starter, redirect the instruction to the adequate controller
-if (!empty($_POST['page']))
-    redirect_control($reservation, $_POST['page']);
+// starter, call the router on the given url
+if (!empty($_GET['page']))
+    redirect_control($reservation, $_GET['page']);
 else
     redirect_control($reservation, 'home');
 

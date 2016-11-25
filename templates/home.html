@@ -2,7 +2,7 @@
 %warning%
 <p>Le prix de la place est de 10€ jusqu'à 12 ans et ensuite de 15€.<br>
 Le prix de l'assurance annulation est de 20€ quel que soit le nombre de voyageurs.</p>
-<form method="post">
+<form method="post" action="details">
     <table>
         <tr>
             <th>Destination</th>
@@ -26,6 +26,6 @@ Le prix de l'assurance annulation est de 20€ quel que soit le nombre de voyage
             <th><input type="checkbox" name="insurance" value="checked" %insurance%></th>
         </tr>
     </table>
-<button class="button button-nav" type="submit" name="page" value="details">Suivant &#8594;</button>
-<button class="button button-cancel" type="submit" name="reset">Annuler</button>
+<button class="button button-nav" type="submit">Suivant &#8594;</button>
+<button class="button button-cancel" type="submit" name="reset" formaction="/">Annuler</button>
 </form>

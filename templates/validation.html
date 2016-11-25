@@ -1,11 +1,10 @@
 <h2>Validation des réservations</h2>
 <p>Veuillez confirmer la validité des informations communiquées.</p>
-<form method="post">
+<form method="post" action="confirmation">
     <table>
         %table%
     </table>
-<button hidden type="submit" name="page" value="confirmation"></button><!-- trick for pressing enter -->
-<button class="button button-nav" type="submit" name="page" value="details">&#8592; Précédent</button>
-<button class="button button-nav" type="submit" name="page" value="confirmation">Suivant &#8594;</button>
-<button class="button button-cancel" type="submit" name="reset">Annuler</button>
+<a href="/details"><button class="button button-nav" type="button">&#8592; Précédent</button></a>
+<button class="button button-nav" type="submit">Suivant &#8594;</button>
+<button class="button button-cancel" type="button" name="reset" formaction="/" formnovalidate>Annuler</button>
 </form>
