@@ -81,7 +81,7 @@ function check_form_details($reservation)
 }
 
 /**
- * Create the database and the table if not presents
+ * Create the database and the table if necessary
  * @param none
  * @return true if the database has been created, false otherwise
  */
