@@ -52,8 +52,10 @@ RUN service mysql start && \
 # Enable phpMyAdmin
 RUN cat /etc/phpmyadmin/apache.conf >> /etc/apache2/apache2.conf
 
-# Apache DocumentRoot
-RUN sed -i 's/html/app/g' /etc/apache2/sites-available/000-default.conf
+# Apache Configuration
+RUN sed -i 's/html/app/g' /etc/apache2/sites-available/000-default.conf && \
+    sed -i '166s/None/All/' /etc/apache2/apache2.conf && \
+    a2enmod rewrite
 
 EXPOSE 80 443
 CMD service mysql start && apachectl start && tail -f /var/log/apache2/access.log
