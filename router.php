@@ -34,6 +34,10 @@ function redirect_control($reservation, $redirection)
             $reservation->reset();
         },
 
+        'admin' => function($reservation, $redirection) {
+            vw_display($reservation, $redirection);
+        },
+
         '404' => function($reservation, $redirection) {
             vw_display($reservation, $redirection); // 404 — page not found
         }

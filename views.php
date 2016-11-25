@@ -19,6 +19,7 @@ function vw_display($reservation, $page)
     // this is an array of function (^з^)-☆
     $fcts = array('404'          => 'display_404',
                   'home'         => 'generate_home',
+                  'admin'        => 'generate_admin',
                   'details'      => 'generate_details',
                   'validation'   => 'generate_validation',
                   'confirmation' => 'generate_confirmation');
@@ -64,12 +65,24 @@ function generate_home($reservation, $template)
     $markers = array('%destination%','%personsCounter%','%insurance%', '%warning%');
     $values  = array($reservation->destination,
                      $reservation->personsCounter,
-                    !$reservation->insurance ?: 'checked',
+                     $reservation->insurance == 'False' ?:'checked',
                      $reservation->warning);
 
     print(str_replace($markers, $values, $template));
 
     $reservation->reset_warning();
+}
+
+/**
+ * Generate and show the administration interface with
+ * all the reservations in stored in the database.
+ * @param the reservation context
+ * @param the template content
+ * @return none
+ */
+function generate_admin($reservation, $template)
+{
+    print($template);
 }
 
 /**

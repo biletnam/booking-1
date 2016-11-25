@@ -12,11 +12,11 @@ class Reservation
 
     function __construct()
     {
-        $this->destination    = "";
+        $this->destination    = '';
         $this->personsCounter = 1;
-        $this->insurance      = false;
+        $this->insurance      = 'False';
         $this->persons        = array();
-        $this->warning        = "";
+        $this->warning        = '';
     }
 
     /**
@@ -53,11 +53,11 @@ class Reservation
      */
     public function reset()
     {
-        $this->destination    = "";
+        $this->destination    = '';
         $this->personsCounter = 1;
-        $this->insurance      = false;
+        $this->insurance      = 'False';
         $this->persons        = array();
-        $this->warning        = "";
+        $this->warning        = '';
         $this->save();
     }
 
@@ -89,7 +89,7 @@ class Reservation
      */
     public function reset_warning()
     {
-        $this->warning = "";
+        $this->warning = '';
         $this->save();
     }
 }

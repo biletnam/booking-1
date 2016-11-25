@@ -16,7 +16,7 @@ function check_form_home($reservation)
     if (!empty($_POST['destination']) AND !empty($_POST['personsCounter']))
     {
         $reservation->destination = htmlspecialchars($_POST['destination']);
-        $reservation->insurance = isset($_POST['insurance']);
+        $reservation->insurance = isset($_POST['insurance']) ? 'True':'False';
         $personsCounter = intval($_POST['personsCounter']);
 
         // set bounds to the number of persons
@@ -81,32 +81,64 @@ function check_form_details($reservation)
 }
 
 /**
+ * Create the database and the table if not presents
+ * @param none
+ * @return true if the database has been created, false otherwise
+ */
+function create_db()
+{
+    if (isset($_SESSION['db_created']))
+        return false; // no need to go further
+
+    $sql_db = "CREATE DATABASE IF NOT EXISTS booking;";
+
+    $sql_tables = "CREATE TABLE `booking`.`reservation` ( 
+                  `id` INT(4) NOT NULL AUTO_INCREMENT ,
+                  `destination` TEXT NOT NULL , 
+                  `insurance` BOOLEAN NOT NULL , 
+                  `nbr_persons` INT(2) NOT NULL , 
+                  `persons` TEXT NOT NULL , 
+                  PRIMARY KEY (`id`)) ENGINE = InnoDB;";
+
+    try
+    {
+        $db = new PDO('mysql:host='.MYSQL_HOST.';', MYSQL_USER, MYSQL_PASS);
+        ~$db->exec($sql_db) and $db->exec($sql_tables);
+        // the wierd syntax above ensure that CREATE TABLE is only
+        // executed if CREATE DATABASE has also been
+    }
+    catch (Exception $e)
+    {
+        die($e->getMessage());
+    }
+
+    return true;
+}
+
+/**
  * Save the reservation in the database.
  * @param the reservation context
  * @return none
  */
 function save_in_db($reservation)
 {
-    // php with its bullshit booleans
-    $insurance = $reservation->insurance ? 'True' : 'False';
+    $request = "INSERT INTO reservation SET
+                insurance=$reservation->insurance,
+                destination='$reservation->destination',
+                nbr_persons='$reservation->personsCounter',
+                persons='".serialize($reservation->persons)."';";
 
     try
     {
         $db = new PDO('mysql:host='.MYSQL_HOST.';dbname='.MYSQL_DB.';
-                        charset=utf8', MYSQL_USER, MYSQL_PASS);
-
-        $request = "INSERT INTO reservation SET
-                    destination='$reservation->destination',
-                      insurance=$insurance,
-                    nbr_persons='$reservation->personsCounter',
-                        persons='".serialize($reservation->persons)."';";
+                       charset=UTF8', MYSQL_USER, MYSQL_PASS);
 
         if ($db->exec($request) == 0)
             throw new Exception('Inconsistent row altered');
     }
     catch (Exception $e)
     {
-        die('Error: '.$e->getMessage());
+        die($e->getMessage());
     }
 }
 
