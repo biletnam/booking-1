@@ -4,4 +4,4 @@ DirectoryIndex app.php
 RewriteEngine On
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([a-z]+)/?$ app.php?page=$1 [L,QSA,NC]
+RewriteRule ^([a-z]+)/?(?:[a-z]+)?/?.*$ app.php?page=$1&module=$2 [L,QSA,NC]
