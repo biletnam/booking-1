@@ -1,7 +1,7 @@
 #!/bin/sh
 
 run() {
-    docker run -it -p 80:80 -v $(PWD):/var/www/app lamp
+    docker run -it -p 80:80 -v $(dirname "$PWD"):/var/www/app lamp
 }
 
 setup() {

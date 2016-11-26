@@ -1,6 +1,6 @@
 <?php
 
-require('config.php')
+require('config.php');
 
 // quick and dirty debugging
 error_reporting(~0);

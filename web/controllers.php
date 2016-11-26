@@ -29,7 +29,8 @@ function check_form_home($reservation)
         }
         else
         {
-            $reservation->append_warning("Vous ne pouvez enregistrer que entre 1 et 30 personnes.\n");
+            $reservation->append_warning("Vous ne pouvez enregistrer ".
+                                         "que entre 1 et 30 personnes.\n");
         }
     }
 
@@ -64,7 +65,8 @@ function check_form_details($reservation)
             }
             else
             {
-                $reservation->append_warning("Veuillez remplir le(s) participant(s) correctement.\n");
+                $reservation->append_warning("Veuillez remplir le(s) ".
+                                             "participant(s) correctement.\n");
                 return false;
             }
         }
