@@ -22,12 +22,14 @@ $sql_tables = "CREATE TABLE `".MYSQL_DB."`.`reservation` (
 try
 {
     $db = new PDO('mysql:host='.MYSQL_HOST.';', MYSQL_USER, MYSQL_PASS);
-    $db->exec($sql_db)
+    $db->exec($sql_db);
     $db->exec($sql_tables);
 }
 catch (Exception $e)
 {
     die($e->getMessage());
 }
+
+print("DB Installed");
 
 ?>
