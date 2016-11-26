@@ -93,7 +93,6 @@ function generate_admin($reservation, $template)
 
         foreach ($db->query($request) as $row)
         {
-            $r = new Reservation()
             $a = $row['id'];
             $b = $row['destination'];
             $c = $row['insurance'];
