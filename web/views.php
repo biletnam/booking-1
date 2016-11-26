@@ -84,6 +84,7 @@ function generate_admin($reservation, $template)
 {
     $tables = '';
     $request = "SELECT * FROM reservation;";
+    $a; $b; $c; $d; $e; $f;
 
     try
     {
@@ -92,16 +93,19 @@ function generate_admin($reservation, $template)
 
         foreach ($db->query($request) as $row)
         {
+            $r = new Reservation()
             $a = $row['id'];
             $b = $row['destination'];
             $c = $row['insurance'];
             $d = $row['nbr_persons'];
-            $e = $row['persons'];
+            $e = $row['price'];
+            foreach(unserialize($row['persons']) as $person)
+                $f .= $person.toString()."\n";
 
             $tables .=<<<EOD
             <tr>
                 <th>$a</th> <th>$b</th> <th>$c</th>
-                <th>$t</th> <th>$d</th> <th>$e</th>
+                <th>$d</th> <th>$e</th> <th>$f</th>
                 <th><a href="/admin/$a">Edit</a></th>
                 <th><a href="/admin/$a">Delete</a></th>
             <tr>
@@ -191,7 +195,7 @@ EOD;
 }
 
 /**
- * Generate and show the confirmation page by calculating the amount to pay.
+ * Generate and show the confirmation page.
  * @param the reservation context
  * @param the template content
  * @return none
@@ -214,6 +218,9 @@ function generate_confirmation($reservation, $template)
         else
             $amount += ADULT_PRICE;
     }
+
+    $reservation->price = $amount; // should be in controller but meh…
+    return $amount;
 
     print(str_replace('%amount%', $amount, $template));
 }

@@ -8,6 +8,7 @@ class Reservation
     private $insurance;
     private $personsCounter;
     private $persons;
+    private $price;
     private $warning; // <- not persistent in db
 
     function __construct()
@@ -16,6 +17,7 @@ class Reservation
         $this->personsCounter = 1;
         $this->insurance      = 'False';
         $this->persons        = array();
+        $this->price          = 0;
         $this->warning        = '';
     }
 
@@ -57,6 +59,7 @@ class Reservation
         $this->personsCounter = 1;
         $this->insurance      = 'False';
         $this->persons        = array();
+        $this->price          = 0;
         $this->warning        = '';
         $this->save();
     }
