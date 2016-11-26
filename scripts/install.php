@@ -2,6 +2,8 @@
 
 // This file exists for the purpose of setting up the database.
 
+require('../config.php');
+
 $sql_db = "CREATE DATABASE IF NOT EXISTS booking;";
 
 $sql_tables = "CREATE TABLE `".MYSQL_DB."`.`reservation` (
