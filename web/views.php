@@ -16,7 +16,7 @@ function vw_display($reservation, $page)
     print(get_chunk('header'));
     $template = get_chunk($page);
 
-    // this is an array of function (^з^)-☆
+    // this is an array of functions (^з^)-☆
     $fcts = array('404'          => 'display_404',
                   'home'         => 'generate_home',
                   'admin'        => 'generate_admin',
@@ -82,7 +82,38 @@ function generate_home($reservation, $template)
  */
 function generate_admin($reservation, $template)
 {
-    print($template);
+    $tables = '';
+    $request = "SELECT * FROM reservation;";
+
+    try
+    {
+        $db = new PDO('mysql:host='.MYSQL_HOST.';dbname='.MYSQL_DB.';
+                       charset=UTF8', MYSQL_USER, MYSQL_PASS);
+
+        foreach ($db->query($request) as $row)
+        {
+            $a = $row['id'];
+            $b = $row['destination'];
+            $c = $row['insurance'];
+            $d = $row['nbr_persons'];
+            $e = $row['persons'];
+
+            $tables .=<<<EOD
+            <tr>
+                <th>$a</th> <th>$b</th> <th>$c</th>
+                <th>$t</th> <th>$d</th> <th>$e</th>
+                <th><a href="/admin/$a">Edit</a></th>
+                <th><a href="/admin/$a">Delete</a></th>
+            <tr>
+EOD;
+        }
+    }
+    catch (Exception $e)
+    {
+        die($e->getMessage());
+    }
+
+    print(str_replace('%table%', $tables, $template));
 }
 
 /**
