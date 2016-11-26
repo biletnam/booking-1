@@ -60,7 +60,7 @@ function display_404($reservation, $template)
 function generate_home($reservation, $template)
 {
     if ($reservation->warning)
-        $reservation->warning = "<div id=\"warning\">".$reservation->warning."</div>";
+        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
     $markers = array('%destination%','%personsCounter%','%insurance%', '%warning%');
     $values  = array($reservation->destination,
@@ -95,9 +95,9 @@ function generate_admin($reservation, $template)
 function generate_details($reservation, $template)
 {
     if ($reservation->warning)
-        $reservation->warning = "<div id=\"warning\">".$reservation->warning."</div>";
+        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
-    $table = "";
+    $table = '';
 
     for ($i = 0; $i < $reservation->personsCounter; $i++)
     {
@@ -109,7 +109,7 @@ function generate_details($reservation, $template)
             $y = $reservation->persons[$i]->age;
         }
 
-        $table .=<<<EOD
+        $tables .=<<<EOD
         <tr>
             <th>Nom</th>
             <th><input type="text" name="fullnames[]" value="$x" required></th>
@@ -137,7 +137,7 @@ EOD;
  */
 function generate_validation($reservation, $template)
 {
-    $tables = "";
+    $tables = '';
 
     for ($i = 0; $i < $reservation->personsCounter; $i++)
     {
