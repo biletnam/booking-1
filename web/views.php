@@ -97,7 +97,7 @@ function generate_details($reservation, $template)
     if ($reservation->warning)
         $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
-    $table = '';
+    $tables = '';
 
     for ($i = 0; $i < $reservation->personsCounter; $i++)
     {
@@ -122,7 +122,7 @@ EOD;
     }
 
     $markers = array('%table%', '%warning%');
-    $values  = array($table, $reservation->warning);
+    $values  = array($tables, $reservation->warning);
 
     print(str_replace($markers, $values, $template));
 
