@@ -87,11 +87,15 @@ function check_form_details($reservation)
  */
 function save_in_db($reservation)
 {
+    // shoud probably not be here
+    $reservation->calculate_amount();
+
     $request = "INSERT INTO reservation SET
+                price=$reservation->price,
                 insurance=$reservation->insurance,
                 destination='$reservation->destination',
-                nbr_persons='$reservation->personsCounter',
-                persons='".serialize($reservation->persons)."';";
+                nbr_persons=$reservation->personsCounter,
+                persons='".base64_encode(serialize($reservation->persons))."';";
 
     try
     {
@@ -99,7 +103,7 @@ function save_in_db($reservation)
                        charset=UTF8', MYSQL_USER, MYSQL_PASS);
 
         if ($db->exec($request) == 0)
-            throw new Exception('Inconsistent row altered');
+            throw new Exception('Something not right happened');
     }
     catch (Exception $e)
     {

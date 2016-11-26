@@ -84,7 +84,6 @@ function generate_admin($reservation, $template)
 {
     $tables = '';
     $request = "SELECT * FROM reservation;";
-    $a; $b; $c; $d; $e; $f;
 
     try
     {
@@ -98,8 +97,10 @@ function generate_admin($reservation, $template)
             $c = $row['insurance'];
             $d = $row['nbr_persons'];
             $e = $row['price'];
-            foreach(unserialize($row['persons']) as $person)
-                $f .= $person.toString()."\n";
+            $f = "";
+
+            foreach(unserialize(base64_decode($row['persons'])) as $person)
+                $f .= $person->toString();
 
             $tables .=<<<EOD
             <tr>
@@ -201,27 +202,7 @@ EOD;
  */
 function generate_confirmation($reservation, $template)
 {
-    define('INSURANCE', 20);
-    define('CHILD_PRICE', 10);
-    define('ADULT_PRICE', 15);
-
-    $amount = 0;
-
-    if ($reservation->insurance)
-        $amount += INSURANCE;
-
-    for ($i = 0; $i < $reservation->personsCounter; $i++)
-    {
-        if ($reservation->persons[$i]->age <= 12)
-            $amount += CHILD_PRICE;
-        else
-            $amount += ADULT_PRICE;
-    }
-
-    $reservation->price = $amount; // should be in controller but meh…
-    return $amount;
-
-    print(str_replace('%amount%', $amount, $template));
+    print(str_replace('%amount%', $reservation->price, $template));
 }
 
 ?>

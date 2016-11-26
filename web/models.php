@@ -168,7 +168,7 @@ class Person
      */
     public function toString()
     {
-        return $fullname.' - '.$age;
+        return $this->fullname." - ".$this->age." ans\n";
     }
 
 }
