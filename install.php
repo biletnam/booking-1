@@ -1,7 +1,6 @@
 <?php
 
-// This file exists for the purpose of setting up
-// the database.
+// This file exists for the purpose of setting up the database.
 
 define('MYSQL_USER', 'root');
 define('MYSQL_PASS', 'root');
