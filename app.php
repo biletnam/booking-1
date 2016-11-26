@@ -1,10 +1,6 @@
 <?php
 
-// custom configuration
-define('MYSQL_USER', 'root');
-define('MYSQL_PASS', 'root');
-define('MYSQL_HOST', 'localhost');
-define('MYSQL_DB', 'booking');
+require('config.php')
 
 // quick and dirty debugging
 error_reporting(~0);

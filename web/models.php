@@ -103,14 +103,10 @@ class Reservation
      */
     public function calculate_amount()
     {
-        define('INSURANCE', 20);
-        define('CHILD_PRICE', 10);
-        define('ADULT_PRICE', 15);
-
         $amount = 0;
 
         if ($this->insurance == 'True')
-            $amount += INSURANCE;
+            $amount += INSURANCE_PRICE;
 
         foreach ($this->persons as $person)
         {

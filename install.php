@@ -2,11 +2,6 @@
 
 // This file exists for the purpose of setting up the database.
 
-define('MYSQL_USER', 'root');
-define('MYSQL_PASS', 'root');
-define('MYSQL_HOST', 'localhost');
-define('MYSQL_DB', 'booking');
-
 $sql_db = "CREATE DATABASE IF NOT EXISTS booking;";
 
 $sql_tables = "CREATE TABLE `".MYSQL_DB."`.`reservation` (
