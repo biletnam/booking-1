@@ -95,6 +95,33 @@ class Reservation
         $this->warning = '';
         $this->save();
     }
+
+    /**
+     * Calculate the amount to pay with the number of persons and their age.
+     * @param none
+     * @return none
+     */
+    public function calculate_amount()
+    {
+        define('INSURANCE', 20);
+        define('CHILD_PRICE', 10);
+        define('ADULT_PRICE', 15);
+
+        $amount = 0;
+
+        if ($this->insurance == 'True')
+            $amount += INSURANCE;
+
+        foreach ($this->persons as $person)
+        {
+            if ($person->age <= 12)
+                $amount += CHILD_PRICE;
+            else
+                $amount += ADULT_PRICE;
+        }
+
+        $this->price = $amount;
+    }
 }
 
 class Person
@@ -139,7 +166,7 @@ class Person
      * @param none
      * @return the stringified attributes of the object
      */
-    function toString()
+    public function toString()
     {
         return $fullname.' - '.$age;
     }
