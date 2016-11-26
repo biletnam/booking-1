@@ -91,7 +91,7 @@ function save_in_db($reservation)
                 insurance=$reservation->insurance,
                 destination='$reservation->destination',
                 nbr_persons='$reservation->personsCounter',
-                persons='"serialize($reservation->persons)"';";
+                persons='".serialize($reservation->persons)."';";
 
     try
     {
