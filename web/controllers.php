@@ -80,4 +80,31 @@ function check_form_details($reservation)
     return false;
 }
 
+/**
+ * Save the reservation in the database.
+ * @param the reservation context
+ * @return none
+ */
+function save_in_db($reservation)
+{
+    $request = "INSERT INTO reservation SET
+                insurance=$reservation->insurance,
+                destination='$reservation->destination',
+                nbr_persons='$reservation->personsCounter',
+                persons='"serialize($reservation->persons)"';";
+
+    try
+    {
+        $db = new PDO('mysql:host='.MYSQL_HOST.';dbname='.MYSQL_DB.';
+                       charset=UTF8', MYSQL_USER, MYSQL_PASS);
+
+        if ($db->exec($request) == 0)
+            throw new Exception('Inconsistent row altered');
+    }
+    catch (Exception $e)
+    {
+        die($e->getMessage());
+    }
+}
+
 ?>
