@@ -130,6 +130,17 @@ class Person
             $this->$property = $value;
         }
     }
+
+    /**
+     * Combine the attributes in a single string.
+     * @param none
+     * @return the stringified attributes of the object
+     */
+    function toString()
+    {
+        return $fullname.' - '.$age;
+    }
+
 }
 
 ?>
