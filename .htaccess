@@ -7,4 +7,4 @@ ErrorDocument 404 /app.php?page=404
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([a-z]+)/?$ app.php?page=$1 [N,NC]
-RewriteRule ^([a-z]+)/([a-z]+)/([1-9]+)/?$ app.php?page=$1&action=$2&id=$3 [L,NC]
+RewriteRule ^([a-z]+)/(edit|del)/([1-9]+)/?$ app.php?page=$1&action=$2&id=$3 [L,NC]

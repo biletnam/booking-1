@@ -18,6 +18,14 @@ body {
     padding: 15px;
 }
 
+#admin {
+    background-color: rgb(241,241,241);
+    width: 90%;
+    margin: auto;
+    padding: 15px;
+    overflow-x: auto;
+}
+
 h2 {
     background-color: rgb(241,241,241);
     padding: 15px;
