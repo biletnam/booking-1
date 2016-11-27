@@ -4,6 +4,7 @@ namespace Models;
 
 class Reservation
 {
+    private $id;
     private $destination;
     private $insurance;
     private $personsCounter;
@@ -14,6 +15,7 @@ class Reservation
 
     function __construct()
     {
+        $this->id             = 0; // only useful in edition mode
         $this->destination    = '';
         $this->personsCounter = 1;
         $this->insurance      = 'False'; // a string because of php bullshit
@@ -57,6 +59,7 @@ class Reservation
      */
     public function reset()
     {
+        $this->id             = 0;
         $this->destination    = '';
         $this->personsCounter = 1;
         $this->insurance      = 'False';
