@@ -100,9 +100,10 @@ function reservation_remove($reservation)
                        charset=UTF8', MYSQL_USER, MYSQL_PASS);
 
         if ($db->exec($request) == 0)
-            $reservation->append_warning("The reservation id does not exist.\n");
+            $reservation->append_warning("L'identifiant de réservation n'existe pas\n");
         else
-            $reservation->append_warning("Successfully deleted reservation ".$id.".\n");
+            $reservation->append_warning("La réservation ".$id." a été ".
+                                         "supprimée avec succès.\n");
     }
     catch (Exception $e)
     {
@@ -132,7 +133,7 @@ function reservation_edit($reservation)
             // of pdostatement is kind of messy so I'm using a foreach.
 
             if ($data == false)
-                $reservation->append_warning("The reservation id does not exist.\n");
+                $reservation->append_warning("L'identifiant de réservation n'existe pas\n");
             else
             {
                 $reservation->reset();
@@ -140,7 +141,6 @@ function reservation_edit($reservation)
                 $reservation->destination    = $data['destination'];
                 $reservation->insurance      = intval($data['insurance']) ? 'True':'False';
                 $reservation->personsCounter = intval($data['nbr_persons']);
-                $reservation->price          = intval($data['price']);
                 $reservation->persons        = unserialize(base64_decode($data['persons']));
                 $reservation->editionMode    = true;
                 $reservation->save();
@@ -178,14 +178,12 @@ function save_in_db($reservation)
                        charset=UTF8', MYSQL_USER, MYSQL_PASS);
 
         if ($db->exec($request) == 0)
-            $reservation->append_warning("Nothing saved.\n");
+            $reservation->append_warning("Rien n'a été enregistré.\n");
     }
     catch (Exception $e)
     {
         die($e->getMessage());
     }
-
-    $reservation->reset();
 }
 
 /**
@@ -211,14 +209,12 @@ function update_db($reservation)
                        charset=UTF8', MYSQL_USER, MYSQL_PASS);
 
         if ($db->exec($request) == 0)
-            $reservation->append_warning("Nothing updated.\n");
+            $reservation->append_warning("Aucune données mise à jour.\n");
     }
     catch (Exception $e)
     {
         die($e->getMessage());
     }
-
-    $reservation->reset();
 }
 
 ?>

@@ -21,6 +21,7 @@ function vw_display($reservation, $page)
                   '404'          => 'display_404',
                   'home'         => 'generate_home',
                   'admin'        => 'generate_admin',
+                  'update'       => 'generate_update',
                   'details'      => 'generate_details',
                   'validation'   => 'generate_validation',
                   'confirmation' => 'generate_confirmation');
@@ -132,6 +133,29 @@ EOD;
     print(str_replace($markers, $values, $template));
 
     $reservation->reset_warning();
+    $reservation->reset();
+}
+
+/**
+ * Generate and show the administration update page with the new price.
+ * @param the reservation context
+ * @param the template content
+ * @return none
+ */
+function generate_update($reservation, $template)
+{
+    if ($reservation->warning)
+        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
+
+    $reservation->calculate_amount();
+
+    $markers = array('%amount%', '%warning%'); 
+    $values = array($reservation->price, $reservation->warning);
+
+    print(str_replace($markers, $values, $template));
+
+    $reservation->reset_warning();
+    $reservation->reset();
 }
 
 /**
@@ -217,6 +241,8 @@ EOD;
 function generate_confirmation($reservation, $template)
 {
     print(str_replace('%amount%', $reservation->price, $template));
+    
+    $reservation->reset();
 }
 
 ?>

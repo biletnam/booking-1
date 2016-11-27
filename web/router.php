@@ -30,11 +30,14 @@ function redirect_control($reservation, $redirection)
 
         'confirmation' => function($reservation, $redirection) {
             if ($reservation->editionMode)
+            {
                 update_db($reservation);
+                $redirection = 'update';
+            }
             else
                 save_in_db($reservation);
+
             vw_display($reservation, $redirection);
-            $reservation->reset();
         },
 
         'admin' => function($reservation, $redirection) {
@@ -43,7 +46,7 @@ function redirect_control($reservation, $redirection)
                 if ($_GET['action'] == 'del')
                     reservation_remove($reservation);
                 else
-                { // process to edit on the creation form
+                { // process the edition on the creation form
                     reservation_edit($reservation);
                     $redirection = 'home';
                 }
