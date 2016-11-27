@@ -109,7 +109,7 @@ function generate_admin($reservation, $template)
             $f = "";
 
             foreach(unserialize(base64_decode($row['persons'])) as $person)
-                $f .= $person;
+                $f .= $person.'<br>';
 
             $tables .=<<<EOD
             <tr>

@@ -164,7 +164,7 @@ class Person
      */
     public function __toString()
     {
-        return $this->fullname." - ".$this->age." ans\n";
+        return $this->fullname." - ".$this->age." ans";
     }
 
 }
