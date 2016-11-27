@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 class Reservation
 {
     private $id;
