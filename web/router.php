@@ -17,13 +17,13 @@ function redirect_control($reservation, $redirection)
         },
 
         'details' => function($reservation, $redirection) {
-            if (!check_form_home($reservation))    // if the informations are incorrect,
+            if (!validation_home($reservation))    // if the informations are incorrect,
                 $redirection = 'home';             // return to the previous page.
             vw_display($reservation, $redirection);
         },
 
         'validation' => function($reservation, $redirection) {
-            if (!check_form_details($reservation)) // if the information are incorrect,
+            if (!validation_details($reservation)) // if the information are incorrect,
                 $redirection = 'details';          // return to the previous page.
             vw_display($reservation, $redirection);
         },
@@ -31,11 +31,11 @@ function redirect_control($reservation, $redirection)
         'confirmation' => function($reservation, $redirection) {
             if ($reservation->editionMode)
             {
-                update_db($reservation);
+                database_update($reservation);
                 $redirection = 'update';
             }
             else
-                save_in_db($reservation);
+                database_insert($reservation);
 
             vw_display($reservation, $redirection);
         },
@@ -44,10 +44,10 @@ function redirect_control($reservation, $redirection)
             if (isset($_GET['action']))
             {
                 if ($_GET['action'] == 'del')
-                    reservation_remove($reservation);
-                else
-                { // process the edition on the creation form
-                    reservation_edit($reservation);
+                    database_delete($reservation);
+                else // action = edit
+                {    // process the edition on the creation form
+                    database_select_one($reservation, intval($_GET['id']));
                     $redirection = 'home';
                 }
             }

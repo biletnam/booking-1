@@ -1,11 +1,14 @@
 <?php
 
+use Models\Person as Person;
+use Models\Reservation as Reservation;
+
 /**
  * Check the data validity transmitted at the homepage.
  * @param the reservation context
  * @return true if the data exist and have the right datatype.
  */
-function check_form_home($reservation)
+function validation_home($reservation)
 {
     // variables exist *AND* are not empty
     if (!empty($_POST['destination']) AND !empty($_POST['personsCounter']))
@@ -43,7 +46,7 @@ function check_form_home($reservation)
  * @param the reservation context
  * @return true if the data exist and have the right datatype.
  */
-function check_form_details($reservation)
+function validation_details($reservation)
 {
     // tables exist *AND* are not empty
     if (!empty($_POST['fullnames']) AND !empty($_POST['ages']))

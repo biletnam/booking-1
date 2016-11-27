@@ -4,20 +4,18 @@
 
 require('views.php');
 
-use Models\Person as Person;
-use Models\Reservation as Reservation;
-
 /*
- * function check_form_home($reservation)
- * function check_form_details($reservation)
+ * function validation_home($reservation)
+ * function validation_details($reservation)
  */
 require('controllers/validation.php');
 
 /*
- * function reservation_remove($reservation)
- * function reservation_edit($reservation)
- * function save_in_db($reservation)
- * function update_db($reservation)
+ * function database_delete($reservation)
+ * function database_select_one($reservation, $id)
+ * function database_select_all()
+ * function database_insert($reservation)
+ * function database_update($reservation)
  */
 require('controllers/database.php');
 

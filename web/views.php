@@ -93,38 +93,25 @@ function generate_admin($reservation, $template)
         $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
     $tables = '';
-    $request = 'SELECT * FROM reservation;';
-
-    try
+    
+    foreach(database_select_all() as $cell) // for every reservation
     {
-        $db = new PDO('mysql:host='.MYSQL_HOST.';dbname='.MYSQL_DB.';
-                       charset=UTF8', MYSQL_USER, MYSQL_PASS);
+        $persons = '';
+        foreach($cell->persons as $p)       // for every person in the reservation
+            $persons .= $p.'<br>';
 
-        foreach ($db->query($request) as $row)
-        {
-            $a = $row['id'];
-            $b = $row['destination'];
-            $c = intval($row['insurance']) ? 'Oui':'Non';
-            $d = $row['nbr_persons'];
-            $e = $row['price'];
-            $f = "";
-
-            foreach(unserialize(base64_decode($row['persons'])) as $person)
-                $f .= $person.'<br>';
-
-            $tables .=<<<EOD
-            <tr>
-                <th>$a</th> <th>$b</th> <th>$c</th>
-                <th>$d</th> <th>$e</th> <th>$f</th>
-                <th><a href="/admin/edit/$a/">Edit</a></th>
-                <th><a href="/admin/del/$a/">Delete</a></th>
-            <tr>
+        $tables .=<<<EOD
+        <tr>
+            <th>$cell->id</th>
+            <th>$cell->destination</th>
+            <th>$cell->insurance</th>
+            <th>$cell->personsCounter</th>
+            <th>$cell->price</th>
+            <th>$persons</th>
+            <th><a href="/admin/edit/$cell->id/">Edit</a></th>
+            <th><a href="/admin/del/$cell->id/">Delete</a></th>
+        <tr>
 EOD;
-        }
-    }
-    catch (Exception $e)
-    {
-        die($e->getMessage());
     }
 
     $markers = array('%table%', '%warning%');
