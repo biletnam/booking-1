@@ -10,15 +10,17 @@ class Reservation
     private $persons;
     private $price;
     private $warning; // <- not persistent in db
+    private $editionMode;
 
     function __construct()
     {
         $this->destination    = '';
         $this->personsCounter = 1;
-        $this->insurance      = 'False';
+        $this->insurance      = 'False'; // a string because of php bullshit
         $this->persons        = array();
         $this->price          = 0;
         $this->warning        = '';
+        $this->editionMode    = false;
     }
 
     /**
@@ -61,6 +63,7 @@ class Reservation
         $this->persons        = array();
         $this->price          = 0;
         $this->warning        = '';
+        $this->editionMode    = false;
         $this->save();
     }
 
