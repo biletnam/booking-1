@@ -1,7 +1,10 @@
 Options +FollowSymLinks -MultiViews
 DirectoryIndex app.php
+RedirectMatch 403 ^/(web|templates)/?$
+ErrorDocument 403 /app.php?page=403
+ErrorDocument 404 /app.php?page=404
 
 RewriteEngine On
-RedirectMatch 403 ^/(web|templates)/?$
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^([a-z]+)/?(?:[a-z]+)?/?.*$ app.php?page=$1&module=$2 [L,QSA,NC]
+RewriteRule ^([a-z]+)/?$ app.php?page=$1 [N,NC]
+RewriteRule ^([a-z]+)/([a-z]+)/([1-9]+)/?$ app.php?page=$1&action=$2&id=$3 [L,NC]

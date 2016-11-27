@@ -38,8 +38,12 @@ function redirect_control($reservation, $redirection)
             vw_display($reservation, $redirection);
         },
 
+        '403' => function($reservation, $redirection) {
+            vw_display($reservation, $redirection); // forbidden
+        },
+
         '404' => function($reservation, $redirection) {
-            vw_display($reservation, $redirection); // 404 — page not found
+            vw_display($reservation, $redirection); // page not found
         }
     );
 
