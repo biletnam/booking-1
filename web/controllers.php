@@ -16,8 +16,8 @@ function check_form_home($reservation)
     if (!empty($_POST['destination']) AND !empty($_POST['personsCounter']))
     {
         $reservation->destination = htmlspecialchars($_POST['destination']);
-        $reservation->insurance = isset($_POST['insurance']) ? 'True':'False';
-        $personsCounter = intval($_POST['personsCounter']);
+        $reservation->insurance   = isset($_POST['insurance']) ? 'True':'False';
+        $personsCounter           = intval($_POST['personsCounter']);
 
         // set bounds to the number of persons
         if (1 <= $personsCounter AND $personsCounter <= 30)
@@ -34,6 +34,7 @@ function check_form_home($reservation)
         }
     }
 
+    //TO FIX
     if (count($reservation->persons) != 0)
         return true; // we're coming from the next page and the datas are corrects
 
@@ -87,12 +88,9 @@ function check_form_details($reservation)
  * @param the reservation context
  * @return none
  */
-function remove_reservation($reservation)
+function reservation_remove($reservation)
 {
     $id = intval($_GET['id']);
-
-    if ($id <= 0)
-        print("Reservation not found");
 
     $request = "DELETE FROM reservation WHERE id=".$id.";";
 
@@ -113,6 +111,51 @@ function remove_reservation($reservation)
 }
 
 /**
+ * Retrieve a Reservation from the database.
+ * @param the reservation context
+ * @return none
+ */
+function reservation_edit($reservation)
+{  
+    $id = intval($_GET['id']);
+
+    $request = "SELECT * FROM reservation WHERE id=".$id.";";
+
+    try
+    {
+        $db = new PDO('mysql:host='.MYSQL_HOST.';dbname='.MYSQL_DB.';
+                       charset=UTF8', MYSQL_USER, MYSQL_PASS);
+
+        foreach ($db->query($request) as $data)
+        { 
+            // this should not be looped more than once but the structure
+            // of pdostatement is kind of messy so I'm using a foreach.
+
+            if ($data == false)
+                $reservation->append_warning("The reservation id does not exist.\n");
+            else
+            {
+                $reservation->reset();
+                $reservation->id             = intval($data['id']);
+                $reservation->destination    = $data['destination'];
+                $reservation->insurance      = intval($data['insurance']) ? 'True':'False';
+                $reservation->personsCounter = intval($data['nbr_persons']);
+                $reservation->price          = intval($data['price']);
+                $reservation->persons        = unserialize(base64_decode($data['persons']));
+                $reservation->editionMode    = true;
+                $reservation->save();
+            }
+        }
+
+    }
+    catch (Exception $e)
+    {
+        die($e->getMessage());
+    }
+
+}
+
+/**
  * Save the reservation in the database.
  * @param the reservation context
  * @return none
@@ -122,12 +165,12 @@ function save_in_db($reservation)
     // shoud probably not be here
     $reservation->calculate_amount();
 
-    $request = "INSERT INTO reservation SET
-                price=$reservation->price,
-                insurance=$reservation->insurance,
-                destination='$reservation->destination',
-                nbr_persons=$reservation->personsCounter,
-                persons='".base64_encode(serialize($reservation->persons))."';";
+    $request = "INSERT INTO reservation
+                SET price=$reservation->price,
+                    insurance=$reservation->insurance,
+                    destination='$reservation->destination',
+                    nbr_persons=$reservation->personsCounter,
+                    persons='".base64_encode(serialize($reservation->persons))."';";
 
     try
     {
@@ -135,12 +178,47 @@ function save_in_db($reservation)
                        charset=UTF8', MYSQL_USER, MYSQL_PASS);
 
         if ($db->exec($request) == 0)
-            throw new Exception('Saving failed');
+            $reservation->append_warning("Nothing saved.\n");
     }
     catch (Exception $e)
     {
         die($e->getMessage());
     }
+
+    $reservation->reset();
+}
+
+/**
+ * Update the reservation in the database.
+ * @param the reservation context
+ * @return none
+ */
+function update_db($reservation)
+{
+    $reservation->calculate_amount();
+
+    $request = "UPDATE reservation
+                SET price=$reservation->price,
+                    insurance=$reservation->insurance,
+                    destination='$reservation->destination',
+                    nbr_persons=$reservation->personsCounter,
+                    persons='".base64_encode(serialize($reservation->persons))."'
+                WHERE id=$reservation->id;";
+
+    try
+    {
+        $db = new PDO('mysql:host='.MYSQL_HOST.';dbname='.MYSQL_DB.';
+                       charset=UTF8', MYSQL_USER, MYSQL_PASS);
+
+        if ($db->exec($request) == 0)
+            $reservation->append_warning("Nothing updated.\n");
+    }
+    catch (Exception $e)
+    {
+        die($e->getMessage());
+    }
+
+    $reservation->reset();
 }
 
 ?>

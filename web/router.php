@@ -29,15 +29,24 @@ function redirect_control($reservation, $redirection)
         },
 
         'confirmation' => function($reservation, $redirection) {
-            save_in_db($reservation);
+            if ($reservation->editionMode)
+                update_db($reservation);
+            else
+                save_in_db($reservation);
             vw_display($reservation, $redirection);
             $reservation->reset();
         },
 
         'admin' => function($reservation, $redirection) {
-            if (isset($_GET['action'])) {
+            if (isset($_GET['action']))
+            {
                 if ($_GET['action'] == 'del')
-                    remove_reservation($reservation);
+                    reservation_remove($reservation);
+                else
+                { // process to edit on the creation form
+                    reservation_edit($reservation);
+                    $redirection = 'home';
+                }
             }
             vw_display($reservation, $redirection);
         },

@@ -115,8 +115,8 @@ function generate_admin($reservation, $template)
             <tr>
                 <th>$a</th> <th>$b</th> <th>$c</th>
                 <th>$d</th> <th>$e</th> <th>$f</th>
-                <th><a href="/admin/edit/$a">Edit</a></th>
-                <th><a href="/admin/del/$a">Delete</a></th>
+                <th><a href="/admin/edit/$a/">Edit</a></th>
+                <th><a href="/admin/del/$a/">Delete</a></th>
             <tr>
 EOD;
         }
