@@ -60,7 +60,7 @@ function display_404($reservation, $template)
 function generate_home($reservation, $template)
 {
     if ($reservation->warning)
-        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
+        $reservation->warning = sprintf("<div id=\"warning\">%s</div>", $reservation->warning);
 
     $markers = array('%destination%','%personsCounter%','%insurance%', '%warning%');
     $values  = array($reservation->destination,
@@ -83,7 +83,7 @@ function generate_home($reservation, $template)
 function generate_admin($reservation, $template)
 {
     $tables = '';
-    $request = "SELECT * FROM reservation;";
+    $request = 'SELECT * FROM reservation;';
 
     try
     {
@@ -100,7 +100,7 @@ function generate_admin($reservation, $template)
             $f = "";
 
             foreach(unserialize(base64_decode($row['persons'])) as $person)
-                $f .= $person->toString();
+                $f .= $person;
 
             $tables .=<<<EOD
             <tr>
@@ -130,7 +130,7 @@ EOD;
 function generate_details($reservation, $template)
 {
     if ($reservation->warning)
-        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
+        $reservation->warning = sprintf("<div id=\"warning\">%s</div>", $reservation->warning);
 
     $tables = '';
 

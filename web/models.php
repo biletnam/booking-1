@@ -162,7 +162,7 @@ class Person
      * @param none
      * @return the stringified attributes of the object
      */
-    public function toString()
+    public function __toString()
     {
         return $this->fullname." - ".$this->age." ans\n";
     }
