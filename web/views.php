@@ -103,7 +103,7 @@ function generate_admin($reservation, $template)
         {
             $a = $row['id'];
             $b = $row['destination'];
-            $c = $row['insurance'];
+            $c = intval($row['insurance']) ? 'Oui':'Non';
             $d = $row['nbr_persons'];
             $e = $row['price'];
             $f = "";
