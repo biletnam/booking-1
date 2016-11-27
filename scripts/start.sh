@@ -1,11 +1,13 @@
 #!/bin/sh
 
+DIR=$(dirname $(readlink -f $0))
+
 run() {
-    docker run -it -p 80:80 -v $(dirname "$PWD"):/var/www/app lamp
+    docker run -it -p 80:80 -v $(dirname "$DIR"):/var/www/app lamp
 }
 
 setup() {
-    docker build -t lamp $(PWD)
+    docker build -t lamp $DIR
 }
 
 remove() {
