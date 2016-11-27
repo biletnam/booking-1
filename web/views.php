@@ -66,7 +66,7 @@ function display_404($reservation, $template)
 function generate_home($reservation, $template)
 {
     if ($reservation->warning)
-        $reservation->warning = sprintf("<div id=\"warning\">%s</div>", $reservation->warning);
+        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
     $markers = array('%destination%','%personsCounter%','%insurance%', '%warning%');
     $values  = array($reservation->destination,
@@ -88,6 +88,9 @@ function generate_home($reservation, $template)
  */
 function generate_admin($reservation, $template)
 {
+    if ($reservation->warning)
+        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
+
     $tables = '';
     $request = 'SELECT * FROM reservation;';
 
@@ -112,8 +115,8 @@ function generate_admin($reservation, $template)
             <tr>
                 <th>$a</th> <th>$b</th> <th>$c</th>
                 <th>$d</th> <th>$e</th> <th>$f</th>
-                <th><a href="/admin/$a">Edit</a></th>
-                <th><a href="/admin/$a">Delete</a></th>
+                <th><a href="/admin/edit/$a">Edit</a></th>
+                <th><a href="/admin/del/$a">Delete</a></th>
             <tr>
 EOD;
         }
@@ -123,7 +126,12 @@ EOD;
         die($e->getMessage());
     }
 
-    print(str_replace('%table%', $tables, $template));
+    $markers = array('%table%', '%warning%');
+    $values  = array($tables, $reservation->warning);
+
+    print(str_replace($markers, $values, $template));
+
+    $reservation->reset_warning();
 }
 
 /**
@@ -136,7 +144,7 @@ EOD;
 function generate_details($reservation, $template)
 {
     if ($reservation->warning)
-        $reservation->warning = sprintf("<div id=\"warning\">%s</div>", $reservation->warning);
+        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
     $tables = '';
 

@@ -35,6 +35,10 @@ function redirect_control($reservation, $redirection)
         },
 
         'admin' => function($reservation, $redirection) {
+            if (isset($_GET['action'])) {
+                if ($_GET['action'] == 'del')
+                    remove_reservation($reservation);
+            }
             vw_display($reservation, $redirection);
         },
 

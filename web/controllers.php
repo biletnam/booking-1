@@ -83,6 +83,36 @@ function check_form_details($reservation)
 }
 
 /**
+ * Remove a reservation in the database.
+ * @param the reservation context
+ * @return none
+ */
+function remove_reservation($reservation)
+{
+    $id = intval($_GET['id']);
+
+    if ($id <= 0)
+        print("Reservation not found");
+
+    $request = "DELETE FROM reservation WHERE id=".$id.";";
+
+    try
+    {
+        $db = new PDO('mysql:host='.MYSQL_HOST.';dbname='.MYSQL_DB.';
+                       charset=UTF8', MYSQL_USER, MYSQL_PASS);
+
+        if ($db->exec($request) == 0)
+            $reservation->append_warning("The reservation id does not exist.\n");
+        else
+            $reservation->append_warning("Successfully deleted reservation ".$id.".\n");
+    }
+    catch (Exception $e)
+    {
+        die($e->getMessage());
+    }
+}
+
+/**
  * Save the reservation in the database.
  * @param the reservation context
  * @return none
@@ -105,7 +135,7 @@ function save_in_db($reservation)
                        charset=UTF8', MYSQL_USER, MYSQL_PASS);
 
         if ($db->exec($request) == 0)
-            throw new Exception('Something not right happened');
+            throw new Exception('Saving failed');
     }
     catch (Exception $e)
     {
