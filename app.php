@@ -20,8 +20,8 @@ else
 // if the user cancels its reservation, the reservation is reseted to default.
 if (isset($_POST['reset']))
 {
+    $_GET['page'] = ($reservation->editionMode ? 'admin':'home');
     $reservation->reset();
-    unset($_GET['page']);
 }
 
 // starter, call the router on the given url

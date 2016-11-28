@@ -69,10 +69,12 @@ function generate_home($reservation, $template)
     if ($reservation->warning)
         $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
-    $markers = array('%destination%','%personsCounter%','%insurance%', '%warning%');
+    $markers = array('%destination%','%personsCounter%','%insurance%',
+                     '%redirect%'   ,'%warning%');
     $values  = array($reservation->destination,
                      $reservation->personsCounter,
                      $reservation->insurance == 'False' ?:'checked',
+                     $reservation->editionMode ? '../../../admin':'home',
                      $reservation->warning);
 
     print(str_replace($markers, $values, $template));
