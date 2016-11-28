@@ -108,8 +108,8 @@ function generate_admin($reservation, $template)
             <th>$cell->personsCounter</th>
             <th>$cell->price</th>
             <th>$persons</th>
-            <th><a href="/admin/edit/$cell->id/">Edit</a></th>
-            <th><a href="/admin/del/$cell->id/">Delete</a></th>
+            <th><a href="admin/edit/$cell->id/">Edit</a></th>
+            <th><a href="admin/del/$cell->id/">Delete</a></th>
         </tr>
 EOD;
     }
