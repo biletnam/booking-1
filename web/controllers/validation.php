@@ -32,7 +32,6 @@ function validation_home($reservation)
         }
     }
 
-    //TO FIX
     if (count($reservation->persons) != 0)
         return true; // we're coming from the next page and the datas are corrects
 
