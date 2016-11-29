@@ -29,8 +29,8 @@ $ctx['database'] = new Database();
 // if the user cancels its reservation, the reservation is reseted to default.
 if (isset($_POST['reset']))
 {
-    $_GET['page'] = ($reservation->editionMode ? 'admin':'home');
-    $reservation->reset();
+    $_GET['page'] = ($ctx['reservation']->editionMode ? 'admin':'home');
+    $ctx['reservation']->reset();
 }
 
 // starter, call the router on the given url
