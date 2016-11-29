@@ -7,11 +7,11 @@ use Models\Reservation as Reservation;
 /**
  * Print the header and footer and let a generate_* function
  * fills between them the page given in argument.
- * @param the reservation context
+ * @param the application context (reservation + db)
  * @param the name of the page to display
  * @return none
  */
-function vw_display($reservation, $page)
+function vw_display($ctx, $page)
 {
     print(get_chunk('header'));
     $template = get_chunk($page);
@@ -26,7 +26,7 @@ function vw_display($reservation, $page)
                   'validation'   => 'generate_validation',
                   'confirmation' => 'generate_confirmation');
 
-    call_user_func($fcts[$page], $reservation, $template);
+    call_user_func($fcts[$page], $ctx, $template);
 
     print(get_chunk('footer'));
 }
@@ -43,16 +43,16 @@ function get_chunk($chunk)
 
 /**
  * Display the http error page.
- * @param the reservation context
+ * @param the application context (reservation + db)
  * @param the template content
  * @return none
  */
-function display_403($reservation, $template)
+function display_403($ctx, $template)
 {
     print($template);
 }
 
-function display_404($reservation, $template)
+function display_404($ctx, $template)
 {
     print($template);
 }
@@ -60,12 +60,14 @@ function display_404($reservation, $template)
 /**
  * Generate and show the homepage.
  * Also show a warning banner if the data submitted was inadequate.
- * @param the reservation context
+ * @param the application context (reservation + db)
  * @param the template content
  * @return none
  */
-function generate_home($reservation, $template)
+function generate_home($ctx, $template)
 {
+    $reservation = $ctx['reservation'];
+
     if ($reservation->warning)
         $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
@@ -85,22 +87,24 @@ function generate_home($reservation, $template)
 /**
  * Generate and show the administration interface with
  * all the reservations in stored in the database.
- * @param the reservation context
+ * @param the application context (reservation + db)
  * @param the template content
  * @return none
  */
-function generate_admin($reservation, $template)
+function generate_admin($ctx, $template)
 {
+    $reservation = $ctx['reservation'];
+
     if ($reservation->warning)
         $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
     $tables = '';
     
-    foreach(database_select_all() as $cell) // for every reservation
+    foreach($ctx['database']->select_all() as $cell) // for every reservation
     {
         $persons = '';
-        foreach($cell->persons as $p)       // for every person in the reservation
-            $persons .= $p.'<br>';
+        foreach($cell->persons as $p)                // for every person in
+            $persons .= $p.'<br>';                   // the reservation
 
         $tables .=<<<EOD
         <tr>
@@ -127,12 +131,14 @@ EOD;
 
 /**
  * Generate and show the administration update page with the new price.
- * @param the reservation context
+ * @param the application context (reservation + db)
  * @param the template content
  * @return none
  */
-function generate_update($reservation, $template)
+function generate_update($ctx, $template)
 {
+    $reservation = $ctx['reservation'];
+
     if ($reservation->warning)
         $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
@@ -150,12 +156,14 @@ function generate_update($reservation, $template)
 /**
  * Generate and show the number of text field necessary for the details page.
  * Also show a warning banner if the data submitted was inadequate.
- * @param the reservation context
+ * @param the application context (reservation + db)
  * @param the template content
  * @return none
  */
-function generate_details($reservation, $template)
+function generate_details($ctx, $template)
 {
+    $reservation = $ctx['reservation'];
+
     if ($reservation->warning)
         $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
 
@@ -193,12 +201,13 @@ EOD;
 
 /**
  * Generate and show the validation page.
- * @param the reservation context
+ * @param the application context (reservation + db)
  * @param the template content
  * @return none
  */
-function generate_validation($reservation, $template)
+function generate_validation($ctx, $template)
 {
+    $reservation = $ctx['reservation'];
     $tables = '';
 
     for ($i = 0; $i < $reservation->personsCounter; $i++)
@@ -223,12 +232,14 @@ EOD;
 
 /**
  * Generate and show the confirmation page.
- * @param the reservation context
+ * @param the application context (reservation + db)
  * @param the template content
  * @return none
  */
-function generate_confirmation($reservation, $template)
+function generate_confirmation($ctx, $template)
 {
+    $reservation = $ctx['reservation'];
+
     print(str_replace('%amount%', $reservation->price, $template));
     
     $reservation->reset();

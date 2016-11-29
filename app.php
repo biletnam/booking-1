@@ -8,14 +8,23 @@ ini_set('display_errors', 1);
 
 session_start();
 
+// create the application context
+$ctx = array(
+    "reservation" => null,
+    "database"    => null
+);
+
 // include middleware
 require('web/router.php');
 
 // if the session exists then resume
 if (isset($_SESSION['reservation']))
-    $reservation = unserialize($_SESSION['reservation']);
+    $ctx['reservation'] = unserialize($_SESSION['reservation']);
 else
-    $reservation = new Models\Reservation();
+    $ctx['reservation'] = new Models\Reservation();
+
+// acquire a new pool to the database
+$ctx['database'] = new Database();
 
 // if the user cancels its reservation, the reservation is reseted to default.
 if (isset($_POST['reset']))
@@ -26,9 +35,9 @@ if (isset($_POST['reset']))
 
 // starter, call the router on the given url
 if (!empty($_GET['page']))
-    redirect_control($reservation, $_GET['page']);
+    redirect_control($ctx, $_GET['page']);
 else
-    redirect_control($reservation, 'home');
+    redirect_control($ctx, 'home');
 
 return 0;
 

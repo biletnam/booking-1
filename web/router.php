@@ -3,70 +3,71 @@
 require('controllers.php');
 
 /**
- * Redirect the user request to the correct views but ensures first that every informations
- * required has been correctly filled if needed. Otherwise, redirect to the form.
- * @param the reservation context
+ * Redirect the user request to the correct views but ensures first that every
+ * informations required has been correctly filled if needed. Otherwise, redirect
+ * to the form.
+ * @param the application context (reservation + db)
  * @param the name of page to be displayed
  * @return none
  */
-function redirect_control($reservation, $redirection)
+function redirect_control($ctx, $redirection)
 {
     $fcts = array(
-        'home' => function($reservation, $redirection) {
-            vw_display($reservation, $redirection);
+        'home' => function($ctx, $redirection) {
+            vw_display($ctx, $redirection);
         },
 
-        'details' => function($reservation, $redirection) {
-            if (!validation_home($reservation))    // if the informations are incorrect,
-                $redirection = 'home';             // return to the previous page.
-            vw_display($reservation, $redirection);
+        'details' => function($ctx, $redirection) {
+            if (!validation_home($ctx['reservation']))    // if the informations
+                $redirection = 'home';                    // are incorrect, return
+            vw_display($ctx, $redirection);               // to the previous page.
         },
 
-        'validation' => function($reservation, $redirection) {
-            if (!validation_details($reservation)) // if the information are incorrect,
-                $redirection = 'details';          // return to the previous page.
-            vw_display($reservation, $redirection);
+        'validation' => function($ctx, $redirection) {
+            if (!validation_details($ctx['reservation'])) // if the informations
+                $redirection = 'details';                 // are incorrect, return
+            vw_display($ctx, $redirection);               // to the previous page.
         },
 
-        'confirmation' => function($reservation, $redirection) {
-            if ($reservation->editionMode)
+        'confirmation' => function($ctx, $redirection) {
+            if ($ctx['reservation']->editionMode)
             {
-                database_update($reservation);
-                $redirection = 'update';
+                $ctx['database']->update($ctx['reservation']);
+                $redirection = 'update'; // go to the update confirmation page
             }
             else
-                database_insert($reservation);
+                $ctx['database']->insert($ctx['reservation']);
 
-            vw_display($reservation, $redirection);
+            vw_display($ctx, $redirection);
         },
 
-        'admin' => function($reservation, $redirection) {
+        'admin' => function($ctx, $redirection) {
             if (isset($_GET['action']))
             {
                 if ($_GET['action'] == 'del')
-                    database_delete($reservation);
+                    $ctx['database']->delete($ctx['reservation']);
                 else // action = edit
                 {    // process the edition on the creation form
-                    database_select_one($reservation, intval($_GET['id']));
+                    $ctx['database']->select_one($ctx['reservation']);
                     $redirection = 'home';
                 }
             }
-            vw_display($reservation, $redirection);
+            vw_display($ctx, $redirection);
         },
 
-        '403' => function($reservation, $redirection) {
-            vw_display($reservation, $redirection); // forbidden
+        '403' => function($ctx, $redirection) {
+            vw_display($ctx, $redirection); // forbidden
         },
 
-        '404' => function($reservation, $redirection) {
-            vw_display($reservation, $redirection); // page not found
+        '404' => function($ctx, $redirection) {
+            vw_display($ctx, $redirection); // page not found
         }
     );
 
     if (!array_key_exists($redirection, $fcts))
         $redirection = '404';
 
-    call_user_func_array($fcts[$redirection], array($reservation, $redirection));
+    call_user_func_array($fcts[$redirection], array($ctx, $redirection));
 }
 
 ?>

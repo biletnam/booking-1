@@ -26,32 +26,6 @@ class Reservation
     }
 
     /**
-     * Generic getter
-     * @param the name of the property to return
-     * @return the value of the property
-     */
-    public function __get($property)
-    {
-        if (property_exists($this, $property))
-        {
-            return $this->$property;
-        }
-    }
-
-    /**
-     * Generic setter
-     * @param the name of the property to set
-     * @return none
-     */
-    public function __set($property, $value)
-    {
-        if (property_exists($this, $property))
-        {
-            $this->$property = $value;
-        }
-    }
-
-    /**
      * Restore all the properties by default.
      * This method is useful to avoid the 'Trying to get property of non-object' error.
      * @param none
@@ -123,6 +97,33 @@ class Reservation
         }
 
         $this->price = $amount;
+    }
+
+    /**
+     * Generic getter
+     * @param the name of the property to return
+     * @return the value of the property
+     */
+    public function __get($property)
+    {
+        if (property_exists($this, $property))
+        {
+            return $this->$property;
+        }
+    }
+
+    /**
+     * Generic setter
+     * @param the name of the property to set
+     * @param the new value to set
+     * @return none
+     */
+    public function __set($property, $value)
+    {
+        if (property_exists($this, $property))
+        {
+            $this->$property = $value;
+        }
     }
 }
 

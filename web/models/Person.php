@@ -29,6 +29,7 @@ class Person
     /**
      * Generic setter
      * @param the name of the property to set
+     * @param the new value to set
      * @return none
      */
     public function __set($property, $value)
