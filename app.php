@@ -28,8 +28,13 @@ $ctx['database'] = new Database();
 // if the user cancels its reservation, the reservation is reseted to default.
 if (isset($_POST['reset']))
 {
-    $_GET['page'] = $ctx['reservation']->isAdmin ? 'admin':'home';
     $ctx['reservation']->reset();
+
+    // if the url contains /admin/
+    if (preg_match('/admin/', $_SERVER['REQUEST_URI']))
+        $_GET['page'] = 'admin';
+    else
+        $_GET['page'] = 'home';
 }
 
 // starter, call the router on the given url

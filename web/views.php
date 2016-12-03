@@ -78,8 +78,6 @@ function generate_home($ctx, $template)
                      $ctx['warning']);
 
     print(str_replace($markers, $values, $template));
-
-    $ctx['warning'] = "";
 }
 
 /**
@@ -123,7 +121,6 @@ EOD;
 
     print(str_replace($markers, $values, $template));
 
-    $ctx['warning'] = "";
     $reservation->reset();
 }
 
@@ -147,7 +144,6 @@ function generate_update($ctx, $template)
 
     print(str_replace($markers, $values, $template));
 
-    $ctx['warning'] = "";
     $reservation->reset();
 }
 
@@ -193,8 +189,6 @@ EOD;
     $values  = array($tables, $ctx['warning']);
 
     print(str_replace($markers, $values, $template));
-
-    $ctx['warning'] = "";
 }
 
 /**

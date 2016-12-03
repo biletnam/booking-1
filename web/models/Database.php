@@ -53,7 +53,6 @@ class Database
                 $x->insurance      = intval($data['insurance']) ? 'True':'False';
                 $x->personsCounter = intval($data['nbr_persons']);
                 $x->persons        = unserialize(base64_decode($data['persons']));
-                $x->isAdmin        = true;
                 $x->save();
             }
         }

@@ -8,7 +8,6 @@ class Reservation
     private $personsCounter;
     private $persons;
     private $price;
-    private $isAdmin;
 
     function __construct()
     {
@@ -18,7 +17,6 @@ class Reservation
         $this->insurance      = 'False'; // a string because of php bullshit
         $this->persons        = array();
         $this->price          = 0;
-        $this->isAdmin        = false;
     }
 
     /**
@@ -35,7 +33,6 @@ class Reservation
         $this->insurance      = 'False';
         $this->persons        = array();
         $this->price          = 0;
-        $this->isAdmin        = false;
         $this->save();
     }
 

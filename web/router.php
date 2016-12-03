@@ -35,7 +35,7 @@ function redirect_control($ctx, $redirection)
 
         'confirmation' => function($ctx, $redirection)
         {
-            if ($ctx['reservation']->isAdmin)
+            if (preg_match('/admin/', $_SERVER['REQUEST_URI']))
             {
                 $ctx['database']->update($ctx);
                 $redirection = 'update';
