@@ -1,6 +1,6 @@
 <?php
 
-require('config.php');
+require_once 'config.php';
 
 // quick and dirty debugging
 error_reporting(~0);
@@ -15,7 +15,7 @@ $ctx = array(
 );
 
 // include middleware
-require('web/router.php');
+require_once 'web/router.php';
 
 // if the session exists then resume
 if (isset($_SESSION['reservation']))

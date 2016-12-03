@@ -1,6 +1,6 @@
 <?php
 
-require('models.php');
+require_once 'models.php';
 
 use Models\Reservation as Reservation;
 

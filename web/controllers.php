@@ -1,6 +1,6 @@
 <?php
 
-require('views.php');
+require_once 'views.php';
 
 use Models\Person as Person;
 

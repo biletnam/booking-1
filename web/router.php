@@ -1,6 +1,6 @@
 <?php
 
-require('controllers.php');
+require_once 'controllers.php';
 
 /**
  * Redirect the user request to the correct views but ensures first that every
