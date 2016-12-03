@@ -1,9 +1,5 @@
 <?php
 
-// quick and dirty debugging
-error_reporting(~0);
-ini_set('display_errors', 1);
-
 session_start();
 
 // create the application context
@@ -25,7 +21,8 @@ else
 
 $ctx['database'] = new Database();
 
-// if the user cancels its reservation, the reservation is reseted to default.
+// if the user cancels its reservation,
+// the reservation is reseted to default.
 if (isset($_POST['reset']))
 {
     $ctx['reservation']->reset();
@@ -37,7 +34,7 @@ if (isset($_POST['reset']))
         $_GET['page'] = 'home';
 }
 
-// starter, call the router on the given url
+// call the router on the requested page
 if (!empty($_GET['page']))
     redirect_control($ctx, $_GET['page']);
 else
