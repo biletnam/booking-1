@@ -2,8 +2,6 @@
 
 require_once 'views.php';
 
-use Models\Person as Person;
-
 /**
  * Check the data validity transmitted at the homepage.
  * @param the reservation context
@@ -28,15 +26,15 @@ function validation_home($reservation)
         }
         else
         {
-            $reservation->append_warning("Vous ne pouvez enregistrer ".
-                                         "que entre 1 et 30 personnes.\n");
+            $ctx['warning'] .= "Vous ne pouvez enregistrer ".
+                               "que entre 1 et 30 personnes.\n";
         }
     }
 
     if (count($reservation->persons) != 0)
         return true; // we're coming from the next page and the datas are corrects
 
-    $reservation->append_warning("Veuillez remplir tous les champs correctement.\n");
+    $ctx['warning'] .= "Veuillez remplir tous les champs correctement.\n";
 
     return false;
 }
@@ -64,8 +62,8 @@ function validation_details($reservation)
             }
             else
             {
-                $reservation->append_warning("Veuillez remplir le(s) ".
-                                             "participant(s) correctement.\n");
+                $ctx['warning'] .= "Veuillez remplir le(s) ".
+                                   "participant(s) correctement.\n";
                 return false;
             }
         }
@@ -76,7 +74,7 @@ function validation_details($reservation)
         return true;
     }
 
-    $reservation->append_warning("Veuillez remplir tous les champs correctement.\n");
+    $ctx['warning'] .= "Veuillez remplir tous les champs correctement.\n";
 
     return false;
 }

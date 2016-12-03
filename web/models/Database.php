@@ -12,31 +12,30 @@ class Database
 
     /**
      * Remove a reservation in the database.
-     * @param the reservation context
+     * @param the application context (reservation + db)
+     * @param the reservation ID
      * @return none
      */
-    function delete($reservation)
+    function delete($ctx, $id)
     {
-        $id = intval($_GET['id']);
-
         $request = "DELETE FROM reservation WHERE id=".$id.";";
 
         if ($this->db->exec($request) == 0)
-            $reservation->append_warning("L'identifiant de réservation n'existe pas\n");
+            $ctx['warning'] .= "L'identifiant de réservation n'existe pas\n";
         else
-            $reservation->append_warning("La réservation ".$id." a été ".
-                                         "supprimée avec succès.\n");
+            $ctx['warning'] .= "La réservation ".$id." a été ".
+                               "supprimée avec succès.\n";
     }
 
     /**
      * Retrieve one Reservation from the database.
-     * @param the reservation context to fill
-     * @param the id of the reservation
-     * @return none
+     * @param the application context (reservation + db)
+     * @param the reservation ID
+     * @return the retrieved Reservation
      */
-    function select_one($reservation)
+    function select_one($ctx, $id)
     {  
-        $id = intval($_GET['id']);
+        $x = new Reservation();
 
         $request = "SELECT * FROM reservation WHERE id=".$id.";";
 
@@ -46,19 +45,20 @@ class Database
             // of pdostatement is kind of messy so I'm using a foreach.
 
             if ($data == false)
-                $reservation->append_warning("L'identifiant de réservation n'existe pas\n");
+                $ctx['warning'] .= "L'identifiant de réservation n'existe pas\n";
             else
             {
-                $reservation->reset();
-                $reservation->id             = intval($data['id']);
-                $reservation->destination    = $data['destination'];
-                $reservation->insurance      = intval($data['insurance']) ? 'True':'False';
-                $reservation->personsCounter = intval($data['nbr_persons']);
-                $reservation->persons        = unserialize(base64_decode($data['persons']));
-                $reservation->editionMode    = true;
-                $reservation->save();
+                $x->id             = $data['id'];
+                $x->destination    = $data['destination'];
+                $x->insurance      = intval($data['insurance']) ? 'True':'False';
+                $x->personsCounter = intval($data['nbr_persons']);
+                $x->persons        = unserialize(base64_decode($data['persons']));
+                $x->isAdmin        = true;
+                $x->save();
             }
         }
+
+        return $x;
     }
 
     /**
@@ -74,7 +74,7 @@ class Database
 
         foreach ($this->db->query($request) as $row)
         {
-            $x = new Models\Reservation();
+            $x = new Reservation();
 
             $x->id             = $row['id'];
             $x->destination    = $row['destination'];
@@ -91,11 +91,12 @@ class Database
 
     /**
      * Save the reservation in the database.
-     * @param the reservation context
+     * @param the application context (reservation + db)
      * @return none
      */
-    function insert($reservation)
+    function insert($ctx)
     {
+        $reservation = $ctx['reservation'];
         $reservation->calculate_amount();
 
         $encoded_persons = base64_encode(serialize($reservation->persons));
@@ -108,16 +109,17 @@ class Database
                         persons='".$encoded_persons."';";
 
         if ($this->db->exec($request) == 0)
-            $reservation->append_warning("Rien n'a été enregistré.\n");
+            $ctx['warning'] .= "Rien n'a été enregistré.\n";
     }
 
     /**
      * Update the reservation in the database.
-     * @param the reservation context
+     * @param the application context (reservation + db)
      * @return none
      */
-    function update($reservation)
+    function update($ctx)
     {
+        $reservation = $ctx['reservation'];
         $reservation->calculate_amount();
 
         $encoded_persons = base64_encode(serialize($reservation->persons));
@@ -131,7 +133,7 @@ class Database
                     WHERE id=$reservation->id;";
 
         if ($this->db->exec($request) == 0)
-            $reservation->append_warning("Aucune données mise à jour.\n");
+            $ctx['warning'] .= "Aucune données mise à jour.\n";
     }
 
     /**

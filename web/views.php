@@ -2,8 +2,6 @@
 
 require_once 'models.php';
 
-use Models\Reservation as Reservation;
-
 /**
  * Print the header and footer and let a generate_* function
  * fills between them the page given in argument.
@@ -68,8 +66,8 @@ function generate_home($ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
-    if ($reservation->warning)
-        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
+    if ($ctx['warning'])
+        $ctx['warning'] = '<div id="warning">'.$ctx['warning'].'</div>';
 
     $markers = array('%destination%','%personsCounter%','%insurance%',
                      '%redirect%'   ,'%warning%');
@@ -77,11 +75,11 @@ function generate_home($ctx, $template)
                      $reservation->personsCounter,
                      $reservation->insurance == 'False' ?:'checked',
                      $reservation->editionMode ? '../../../admin':'home',
-                     $reservation->warning);
+                     $ctx['warning']);
 
     print(str_replace($markers, $values, $template));
 
-    $reservation->reset_warning();
+    $ctx['warning'] = "";
 }
 
 /**
@@ -95,8 +93,8 @@ function generate_admin($ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
-    if ($reservation->warning)
-        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
+    if ($ctx['warning'])
+        $ctx['warning'] = '<div id="warning">'.$ctx['warning'].'</div>';
 
     $tables = '';
     
@@ -121,11 +119,11 @@ EOD;
     }
 
     $markers = array('%table%', '%warning%');
-    $values  = array($tables, $reservation->warning);
+    $values  = array($tables, $ctx['warning']);
 
     print(str_replace($markers, $values, $template));
 
-    $reservation->reset_warning();
+    $ctx['warning'] = "";
     $reservation->reset();
 }
 
@@ -139,17 +137,17 @@ function generate_update($ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
-    if ($reservation->warning)
-        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
+    if ($ctx['warning'])
+        $ctx['warning'] = '<div id="warning">'.$ctx['warning'].'</div>';
 
     $reservation->calculate_amount();
 
     $markers = array('%amount%', '%warning%'); 
-    $values = array($reservation->price, $reservation->warning);
+    $values  = array($reservation->price, $ctx['warning']);
 
     print(str_replace($markers, $values, $template));
 
-    $reservation->reset_warning();
+    $ctx['warning'] = "";
     $reservation->reset();
 }
 
@@ -164,8 +162,8 @@ function generate_details($ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
-    if ($reservation->warning)
-        $reservation->warning = '<div id="warning">'.$reservation->warning.'</div>';
+    if ($ctx['warning'])
+        $ctx['warning'] = '<div id="warning">'.$ctx['warning'].'</div>';
 
     $tables = '';
 
@@ -192,11 +190,11 @@ EOD;
     }
 
     $markers = array('%table%', '%warning%');
-    $values  = array($tables, $reservation->warning);
+    $values  = array($tables, $ctx['warning']);
 
     print(str_replace($markers, $values, $template));
 
-    $reservation->reset_warning();
+    $ctx['warning'] = "";
 }
 
 /**

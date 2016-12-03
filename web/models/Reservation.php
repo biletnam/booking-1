@@ -1,7 +1,5 @@
 <?php
 
-namespace Models;
-
 class Reservation
 {
     private $id;
@@ -10,8 +8,7 @@ class Reservation
     private $personsCounter;
     private $persons;
     private $price;
-    private $warning; // <- not persistent in db
-    private $editionMode;
+    private $isAdmin;
 
     function __construct()
     {
@@ -21,8 +18,7 @@ class Reservation
         $this->insurance      = 'False'; // a string because of php bullshit
         $this->persons        = array();
         $this->price          = 0;
-        $this->warning        = '';
-        $this->editionMode    = false;
+        $this->isAdmin        = false;
     }
 
     /**
@@ -39,8 +35,7 @@ class Reservation
         $this->insurance      = 'False';
         $this->persons        = array();
         $this->price          = 0;
-        $this->warning        = '';
-        $this->editionMode    = false;
+        $this->isAdmin        = false;
         $this->save();
     }
 
@@ -52,28 +47,6 @@ class Reservation
     public function save()
     {
         $_SESSION['reservation'] = serialize($this);
-    }
-
-    /**
-     * Append every warning message to a single string that will be used
-     * to warn the user about inadequate informations.
-     * @param the message to append to warnings
-     * @return none
-     */
-    public function append_warning($message)
-    {
-        $this->warning .= $message;
-    }
-
-    /**
-     * Clean the warning string and save it.
-     * @param none
-     * @return none
-     */
-    public function reset_warning()
-    {
-        $this->warning = '';
-        $this->save();
     }
 
     /**

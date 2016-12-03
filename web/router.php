@@ -13,53 +13,69 @@ require_once 'controllers.php';
 function redirect_control($ctx, $redirection)
 {
     $fcts = array(
-        'home' => function($ctx, $redirection) {
+
+        'home' => function($ctx, $redirection)
+        {
             vw_display($ctx, $redirection);
         },
 
-        'details' => function($ctx, $redirection) {
+        'details' => function($ctx, $redirection)
+        {
             if (!validation_home($ctx['reservation']))    // if the informations
                 $redirection = 'home';                    // are incorrect, return
             vw_display($ctx, $redirection);               // to the previous page.
         },
 
-        'validation' => function($ctx, $redirection) {
+        'validation' => function($ctx, $redirection)
+        {
             if (!validation_details($ctx['reservation'])) // if the informations
                 $redirection = 'details';                 // are incorrect, return
             vw_display($ctx, $redirection);               // to the previous page.
         },
 
-        'confirmation' => function($ctx, $redirection) {
-            if ($ctx['reservation']->editionMode)
+        'confirmation' => function($ctx, $redirection)
+        {
+            if ($ctx['reservation']->isAdmin)
             {
-                $ctx['database']->update($ctx['reservation']);
-                $redirection = 'update'; // go to the update confirmation page
+                $ctx['database']->update($ctx);
+                $redirection = 'update';
             }
             else
-                $ctx['database']->insert($ctx['reservation']);
+            {
+                $ctx['database']->insert($ctx);
+            }
 
             vw_display($ctx, $redirection);
         },
 
-        'admin' => function($ctx, $redirection) {
+        'admin' => function($ctx, $redirection)
+        {
             if (isset($_GET['action']))
             {
+                $id = intval($_GET['id']);
+
                 if ($_GET['action'] == 'del')
-                    $ctx['database']->delete($ctx['reservation']);
+                {
+                    $ctx['database']->delete($ctx, $id);
+                }
                 else // action = edit
-                {    // process the edition on the creation form
-                    $ctx['database']->select_one($ctx['reservation']);
+                {
+                    // the edition will be processed on the creation form
+                    $ctx['reservation'] = $ctx['database']->select_one($ctx, $id);
                     $redirection = 'home';
                 }
             }
+
             vw_display($ctx, $redirection);
         },
 
-        '403' => function($ctx, $redirection) {
+        '403' => function($ctx, $redirection)
+        {
             vw_display($ctx, $redirection); // forbidden
         },
 
-        '404' => function($ctx, $redirection) {
+        '404' => function($ctx, $redirection)
+        {
             vw_display($ctx, $redirection); // page not found
         }
     );
