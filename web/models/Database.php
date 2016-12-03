@@ -2,12 +2,19 @@
 
 class Database
 {
-    private $db; // open connection to the database
+    private $db; // an open connection to the database
     
     function __construct()
     {
-        $this->db = new PDO('mysql:host='.MYSQL_HOST.';dbname='.MYSQL_DB.';
-                             charset=UTF8', MYSQL_USER, MYSQL_PASS);
+        try
+        {
+            $this->db = new PDO('mysql:host='.MYSQL_HOST.';dbname='.MYSQL_DB.';
+                                 charset=UTF8', MYSQL_USER, MYSQL_PASS);
+        }
+        catch (Exception $e)
+        {
+            printf("<div id=\"warning\">%s</div>", $e->getMessage());
+        }
     }
 
     /**

@@ -99,8 +99,8 @@ function generate_admin($ctx, $template)
     foreach($ctx['database']->select_all() as $cell) // for every reservation
     {
         $persons = '';
-        foreach($cell->persons as $p)                // for every person in
-            $persons .= $p.'<br>';                   // the reservation
+        foreach($cell->persons as $_)                // for every person in
+            $persons .= $_.'<br>';                   // the reservation
 
         $tables .=<<<EOD
         <tr>

@@ -2,11 +2,12 @@
 
 // This file exists for the purpose of setting up the database.
 
-require('../config.php');
+require_once '../config.php';
 
-$sql_db = "CREATE DATABASE IF NOT EXISTS booking;";
+$sql_db = "CREATE DATABASE IF NOT EXISTS `".MYSQL_DB."`;";
 
-$sql_tables = "CREATE TABLE `".MYSQL_DB."`.`reservation` (
+$sql_tables = "CREATE TABLE IF NOT EXISTS `".MYSQL_DB."`.
+              `reservation` (
               `id` INT(4) NOT NULL AUTO_INCREMENT ,
               `destination` TEXT NOT NULL ,
               `insurance` BOOLEAN NOT NULL ,

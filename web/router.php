@@ -3,9 +3,9 @@
 require_once 'controllers.php';
 
 /**
- * Redirect the user request to the correct views but ensures first that every
- * informations required has been correctly filled if needed. Otherwise, redirect
- * to the form.
+ * Redirect the user request to the correct views but ensures
+ * first that every informations required has been correctly
+ * filled if needed. Otherwise, redirect to the form.
  * @param the application context (reservation + db)
  * @param the name of page to be displayed
  * @return none
@@ -16,25 +16,31 @@ function redirect_control($ctx, $redirection)
 
         'home' => function($ctx, $redirection)
         {
+            /* nothing to do here */
             vw_display($ctx, $redirection);
         },
 
         'details' => function($ctx, $redirection)
         {
-            if (!validation_home($ctx['reservation']))    // if the informations
-                $redirection = 'home';                    // are incorrect, return
-            vw_display($ctx, $redirection);               // to the previous page.
+            /* if the informatin are incorrect,
+             * return to the previous page. */
+            if (!validation_home($ctx['reservation']))
+                $redirection = 'home';
+            vw_display($ctx, $redirection);
         },
 
         'validation' => function($ctx, $redirection)
         {
-            if (!validation_details($ctx['reservation'])) // if the informations
-                $redirection = 'details';                 // are incorrect, return
-            vw_display($ctx, $redirection);               // to the previous page.
+            /* if the informatin are incorrect,
+             * return to the previous page. */
+            if (!validation_details($ctx['reservation']))
+                $redirection = 'details';
+            vw_display($ctx, $redirection);
         },
 
         'confirmation' => function($ctx, $redirection)
         {
+            /* if the URI contains 'admin' */
             if (preg_match('/admin/', $_SERVER['REQUEST_URI']))
             {
                 $ctx['database']->update($ctx);
@@ -58,10 +64,11 @@ function redirect_control($ctx, $redirection)
                 {
                     $ctx['database']->delete($ctx, $id);
                 }
-                else // action = edit
+                else /* action = edit */
                 {
                     // the edition will be processed on the creation form
-                    $ctx['reservation'] = $ctx['database']->select_one($ctx, $id);
+                    $_ = $ctx['database']->select_one($ctx, $id);
+                    $ctx['reservation'] = $_;
                     $redirection = 'home';
                 }
             }
@@ -69,14 +76,16 @@ function redirect_control($ctx, $redirection)
             vw_display($ctx, $redirection);
         },
 
-        '403' => function($ctx, $redirection)
+        '403' => function($ctx, $redirection) // forbidden
         {
-            vw_display($ctx, $redirection); // forbidden
+            /* nothing to do here */
+            vw_display($ctx, $redirection);
         },
 
-        '404' => function($ctx, $redirection)
+        '404' => function($ctx, $redirection) // page not found
         {
-            vw_display($ctx, $redirection); // page not found
+            /* nothing to do here */
+            vw_display($ctx, $redirection);
         }
     );
 
