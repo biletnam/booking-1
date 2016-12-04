@@ -56,6 +56,8 @@ RUN cat /etc/phpmyadmin/apache.conf >> /etc/apache2/apache2.conf
 RUN sed -i 's/html/app/g' /etc/apache2/sites-available/000-default.conf && \
     sed -i '166s/None/All/' /etc/apache2/apache2.conf && \
     sed -i '878s/;//' /etc/php/7.0/apache2/php.ini && \
+    sed -i '445s/ & ~E_DEPRECATED & ~E_STRICT//g' /etc/php/7.0/apache2/php.ini && \
+    sed -i '462s/Off/On/g' /etc/php/7.0/apache2/php.ini && \
     a2enmod rewrite
 
 EXPOSE 80 443
