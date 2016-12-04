@@ -11,7 +11,7 @@ require_once 'models.php';
  */
 function vw_display($ctx, $page)
 {
-    print(get_chunk('header'));
+    echo get_chunk('header');
     $template = get_chunk($page);
 
     // this is an array of functions (^з^)-☆
@@ -26,7 +26,7 @@ function vw_display($ctx, $page)
 
     call_user_func($fcts[$page], $ctx, $template);
 
-    print(get_chunk('footer'));
+    echo get_chunk('footer');
 }
 
 /**
@@ -47,12 +47,12 @@ function get_chunk($chunk)
  */
 function display_403($ctx, $template)
 {
-    print($template);
+    echo $template;
 }
 
 function display_404($ctx, $template)
 {
-    print($template);
+    echo $template;
 }
 
 /**
@@ -77,7 +77,7 @@ function generate_home($ctx, $template)
                      $reservation->editionMode ? '../../../admin':'home',
                      $ctx['warning']);
 
-    print(str_replace($markers, $values, $template));
+    echo str_replace($markers, $values, $template);
 }
 
 /**
@@ -119,7 +119,7 @@ EOD;
     $markers = array('%table%', '%warning%');
     $values  = array($tables, $ctx['warning']);
 
-    print(str_replace($markers, $values, $template));
+    echo str_replace($markers, $values, $template);
 
     $reservation->reset();
 }
@@ -142,7 +142,7 @@ function generate_update($ctx, $template)
     $markers = array('%amount%', '%warning%'); 
     $values  = array($reservation->price, $ctx['warning']);
 
-    print(str_replace($markers, $values, $template));
+    echo str_replace($markers, $values, $template);
 
     $reservation->reset();
 }
@@ -188,7 +188,7 @@ EOD;
     $markers = array('%table%', '%warning%');
     $values  = array($tables, $ctx['warning']);
 
-    print(str_replace($markers, $values, $template));
+    echo str_replace($markers, $values, $template);
 }
 
 /**
@@ -219,7 +219,7 @@ function generate_validation($ctx, $template)
 EOD;
     }
 
-    print(str_replace('%table%', $tables, $template));
+    echo str_replace('%table%', $tables, $template);
 }
 
 /**
@@ -232,7 +232,7 @@ function generate_confirmation($ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
-    print(str_replace('%amount%', $reservation->price, $template));
+    echo str_replace('%amount%', $reservation->price, $template);
     
     $reservation->reset();
 }
