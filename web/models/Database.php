@@ -23,7 +23,7 @@ class Database
      * @param the reservation ID
      * @return none
      */
-    function delete($ctx, $id)
+    function delete(&$ctx, $id)
     {
         $request = "DELETE FROM reservation WHERE id=".$id.";";
 
@@ -40,7 +40,7 @@ class Database
      * @param the reservation ID
      * @return the retrieved Reservation
      */
-    function select_one($ctx, $id)
+    function select_one(&$ctx, $id)
     {  
         $x = new Reservation();
 
@@ -100,7 +100,7 @@ class Database
      * @param the application context (reservation + db)
      * @return none
      */
-    function insert($ctx)
+    function insert(&$ctx)
     {
         $reservation = $ctx['reservation'];
         $reservation->calculate_amount();
@@ -123,7 +123,7 @@ class Database
      * @param the application context (reservation + db)
      * @return none
      */
-    function update($ctx)
+    function update(&$ctx)
     {
         $reservation = $ctx['reservation'];
         $reservation->calculate_amount();

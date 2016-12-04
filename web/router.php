@@ -10,35 +10,33 @@ require_once 'controllers.php';
  * @param the name of page to be displayed
  * @return none
  */
-function redirect_control($ctx, $redirection)
+function route(&$ctx, $redirection)
 {
     $fcts = array(
 
-        'home' => function($ctx, $redirection)
+        'home' => function(&$ctx, $redirection)
         {
             /* nothing to do here */
             vw_display($ctx, $redirection);
         },
 
-        'details' => function($ctx, $redirection)
+        'details' => function(&$ctx, $redirection)
         {
-            /* if the informatin are incorrect,
-             * return to the previous page. */
-            if (!validation_home($ctx['reservation']))
+            // if the informatin are incorrect, return to the previous page.
+            if (!validation_home($ctx))
                 $redirection = 'home';
             vw_display($ctx, $redirection);
         },
 
-        'validation' => function($ctx, $redirection)
+        'validation' => function(&$ctx, $redirection)
         {
-            /* if the informatin are incorrect,
-             * return to the previous page. */
-            if (!validation_details($ctx['reservation']))
+            // if the informatin are incorrect, return to the previous page.
+            if (!validation_details($ctx))
                 $redirection = 'details';
             vw_display($ctx, $redirection);
         },
 
-        'confirmation' => function($ctx, $redirection)
+        'confirmation' => function(&$ctx, $redirection)
         {
             if ($ctx['isAdmin'])
             {
@@ -53,7 +51,7 @@ function redirect_control($ctx, $redirection)
             vw_display($ctx, $redirection);
         },
 
-        'admin' => function($ctx, $redirection)
+        'admin' => function(&$ctx, $redirection)
         {
             if (isset($_GET['action']))
             {
@@ -75,13 +73,13 @@ function redirect_control($ctx, $redirection)
             vw_display($ctx, $redirection);
         },
 
-        '403' => function($ctx, $redirection) // forbidden
+        '403' => function(&$ctx, $redirection) // forbidden
         {
             /* nothing to do here */
             vw_display($ctx, $redirection);
         },
 
-        '404' => function($ctx, $redirection) // page not found
+        '404' => function(&$ctx, $redirection) // page not found
         {
             /* nothing to do here */
             vw_display($ctx, $redirection);
@@ -91,7 +89,7 @@ function redirect_control($ctx, $redirection)
     if (!array_key_exists($redirection, $fcts))
         $redirection = '404';
 
-    call_user_func_array($fcts[$redirection], array($ctx, $redirection));
+    call_user_func_array($fcts[$redirection], array(&$ctx, $redirection));
 }
 
 ?>

@@ -4,11 +4,13 @@ require_once 'views.php';
 
 /**
  * Check the data validity transmitted at the homepage.
- * @param the reservation context
+ * @param the application context (reservation + db)
  * @return true if the data exist and have the right datatype.
  */
-function validation_home($reservation)
+function validation_home(&$ctx)
 {
+    $reservation = $ctx['reservation'];
+
     // variables exist *AND* are not empty
     if (!empty($_POST['destination']) AND !empty($_POST['personsCounter']))
     {
@@ -41,11 +43,13 @@ function validation_home($reservation)
 
 /**
  * Check the data validity transmitted at the detail page.
- * @param the reservation context
+ * @param the application context (reservation + db)
  * @return true if the data exist and have the right datatype.
  */
-function validation_details($reservation)
+function validation_details(&$ctx)
 {
+    $reservation = $ctx['reservation'];
+    
     // tables exist *AND* are not empty
     if (!empty($_POST['fullnames']) AND !empty($_POST['ages']))
     {

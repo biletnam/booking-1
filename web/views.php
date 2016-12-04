@@ -9,7 +9,7 @@ require_once 'models.php';
  * @param the name of the page to display
  * @return none
  */
-function vw_display($ctx, $page)
+function vw_display(&$ctx, $page)
 {
     echo get_chunk('header');
     $template = get_chunk($page);
@@ -45,12 +45,12 @@ function get_chunk($chunk)
  * @param the template content
  * @return none
  */
-function display_403($ctx, $template)
+function display_403(&$ctx, $template)
 {
     echo $template;
 }
 
-function display_404($ctx, $template)
+function display_404(&$ctx, $template)
 {
     echo $template;
 }
@@ -62,7 +62,7 @@ function display_404($ctx, $template)
  * @param the template content
  * @return none
  */
-function generate_home($ctx, $template)
+function generate_home(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
@@ -87,7 +87,7 @@ function generate_home($ctx, $template)
  * @param the template content
  * @return none
  */
-function generate_admin($ctx, $template)
+function generate_admin(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
@@ -130,7 +130,7 @@ EOD;
  * @param the template content
  * @return none
  */
-function generate_update($ctx, $template)
+function generate_update(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
@@ -154,7 +154,7 @@ function generate_update($ctx, $template)
  * @param the template content
  * @return none
  */
-function generate_details($ctx, $template)
+function generate_details(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
@@ -197,7 +197,7 @@ EOD;
  * @param the template content
  * @return none
  */
-function generate_validation($ctx, $template)
+function generate_validation(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
     $tables = '';
@@ -228,7 +228,7 @@ EOD;
  * @param the template content
  * @return none
  */
-function generate_confirmation($ctx, $template)
+function generate_confirmation(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
