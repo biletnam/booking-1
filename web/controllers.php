@@ -7,7 +7,7 @@ require_once 'views.php';
  * @param the application context (reservation + db)
  * @return true if the data exist and have the right datatype.
  */
-function controller_validateHome(&$ctx)
+function ctr_validateHome(&$ctx)
 {
     $reservation = $ctx['reservation'];
 
@@ -46,7 +46,7 @@ function controller_validateHome(&$ctx)
  * @param the application context (reservation + db)
  * @return true if the data exist and have the right datatype.
  */
-function controller_validateDetails(&$ctx)
+function ctr_validateDetails(&$ctx)
 {
     $reservation = $ctx['reservation'];
 
@@ -91,7 +91,7 @@ function controller_validateDetails(&$ctx)
  * @param the application context (reservation + db)
  * @return true if every fields are ok
  */
-function controller_validateConfirmation(&$ctx)
+function ctr_validateConfirmation(&$ctx)
 {
     $reservation = $ctx['reservation'];
 

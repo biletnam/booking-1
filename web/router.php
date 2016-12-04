@@ -23,7 +23,7 @@ function route(&$ctx, $redirection)
         'details' => function(&$ctx, $redirection)
         {
             // if inputs are incorrects, go home
-            if (!controller_validateHome($ctx))
+            if (!ctr_validateHome($ctx))
                 $redirection = 'home';
             vw_display($ctx, $redirection);
         },
@@ -31,7 +31,7 @@ function route(&$ctx, $redirection)
         'validation' => function(&$ctx, $redirection)
         {
             // if inputs are incorrects, go details
-            if (!controller_validateDetails($ctx))
+            if (!ctr_validateDetails($ctx))
                 $redirection = 'details';
             vw_display($ctx, $redirection);
         },
@@ -39,7 +39,7 @@ function route(&$ctx, $redirection)
         'confirmation' => function(&$ctx, $redirection)
         {
             // if reservation is not completed, go home
-            if (!controller_validateConfirmation($ctx))
+            if (!ctr_validateConfirmation($ctx))
             {
                 $redirection = 'home';
             }
