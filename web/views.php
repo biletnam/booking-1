@@ -11,22 +11,22 @@ require_once 'models.php';
  */
 function vw_display(&$ctx, $page)
 {
-    echo get_chunk('header');
-    $template = get_chunk($page);
+    echo vw_getChunk('header');
+    $template = vw_getChunk($page);
 
     // this is an array of functions (^з^)-☆
-    $fcts = array('403'          => 'display_403',
-                  '404'          => 'display_404',
-                  'home'         => 'generate_home',
-                  'admin'        => 'generate_admin',
-                  'update'       => 'generate_update',
-                  'details'      => 'generate_details',
-                  'validation'   => 'generate_validation',
-                  'confirmation' => 'generate_confirmation');
+    $fcts = array('403'          => 'vw_page403',
+                  '404'          => 'vw_page404',
+                  'home'         => 'vw_pageHome',
+                  'admin'        => 'vw_pageAdmin',
+                  'update'       => 'vw_pageUpdate',
+                  'details'      => 'vw_pageDetails',
+                  'validation'   => 'vw_pageValidation',
+                  'confirmation' => 'vw_pageConfirmation');
 
     call_user_func($fcts[$page], $ctx, $template);
 
-    echo get_chunk('footer');
+    echo vw_getChunk('footer');
 }
 
 /**
@@ -34,7 +34,7 @@ function vw_display(&$ctx, $page)
  * @param the filename without extension of the html file
  * @return the content of the html file
  */
-function get_chunk($chunk)
+function vw_getChunk($chunk)
 {
     return file_get_contents('./templates/'.$chunk.'.html');
 }
@@ -45,12 +45,12 @@ function get_chunk($chunk)
  * @param the template content
  * @return none
  */
-function display_403(&$ctx, $template)
+function vw_page403(&$ctx, $template)
 {
     echo $template;
 }
 
-function display_404(&$ctx, $template)
+function vw_page404(&$ctx, $template)
 {
     echo $template;
 }
@@ -62,7 +62,7 @@ function display_404(&$ctx, $template)
  * @param the template content
  * @return none
  */
-function generate_home(&$ctx, $template)
+function vw_pageHome(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
@@ -87,7 +87,7 @@ function generate_home(&$ctx, $template)
  * @param the template content
  * @return none
  */
-function generate_admin(&$ctx, $template)
+function vw_pageAdmin(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
@@ -96,7 +96,7 @@ function generate_admin(&$ctx, $template)
 
     $tables = '';
     
-    foreach($ctx['database']->select_all() as $cell) // for every reservation
+    foreach($ctx['database']->selectAll() as $cell) // for every reservation
     {
         $persons = '';
         foreach($cell->persons as $_)                // for every person in
@@ -130,14 +130,14 @@ EOD;
  * @param the template content
  * @return none
  */
-function generate_update(&$ctx, $template)
+function vw_pageUpdate(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
     if ($ctx['warning'])
         $ctx['warning'] = '<div id="warning">'.$ctx['warning'].'</div>';
 
-    $reservation->calculate_amount();
+    $reservation->calculateAmount();
 
     $markers = array('%amount%', '%warning%'); 
     $values  = array($reservation->price, $ctx['warning']);
@@ -154,7 +154,7 @@ function generate_update(&$ctx, $template)
  * @param the template content
  * @return none
  */
-function generate_details(&$ctx, $template)
+function vw_pageDetails(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
@@ -197,7 +197,7 @@ EOD;
  * @param the template content
  * @return none
  */
-function generate_validation(&$ctx, $template)
+function vw_pageValidation(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
     $tables = '';
@@ -228,7 +228,7 @@ EOD;
  * @param the template content
  * @return none
  */
-function generate_confirmation(&$ctx, $template)
+function vw_pageConfirmation(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 

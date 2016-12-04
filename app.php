@@ -35,9 +35,9 @@ if (isset($_POST['reset']))
 
 // call the router on the requested page
 if (!empty($_GET['page']))
-    redirect_control($ctx, $_GET['page']);
+    route($ctx, $_GET['page']);
 else
-    redirect_control($ctx, 'home');
+    route($ctx, 'home');
 
 return 0;
 

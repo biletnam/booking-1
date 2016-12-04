@@ -51,7 +51,7 @@ class Reservation
      * @param none
      * @return none
      */
-    public function calculate_amount()
+    public function calculateAmount()
     {
         $amount = 0;
 

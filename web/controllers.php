@@ -7,7 +7,7 @@ require_once 'views.php';
  * @param the application context (reservation + db)
  * @return true if the data exist and have the right datatype.
  */
-function validation_home(&$ctx)
+function controller_validateHome(&$ctx)
 {
     $reservation = $ctx['reservation'];
 
@@ -46,10 +46,10 @@ function validation_home(&$ctx)
  * @param the application context (reservation + db)
  * @return true if the data exist and have the right datatype.
  */
-function validation_details(&$ctx)
+function controller_validateDetails(&$ctx)
 {
     $reservation = $ctx['reservation'];
-    
+
     // tables exist *AND* are not empty
     if (!empty($_POST['fullnames']) AND !empty($_POST['ages']))
     {

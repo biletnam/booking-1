@@ -40,7 +40,7 @@ class Database
      * @param the reservation ID
      * @return the retrieved Reservation
      */
-    function select_one(&$ctx, $id)
+    function selectOne(&$ctx, $id)
     {  
         $x = new Reservation();
 
@@ -72,7 +72,7 @@ class Database
      * @param none
      * @return an array with all the reservation from the database
      */
-    function select_all()
+    function selectAll()
     {  
         $reservations = array();
 
@@ -103,16 +103,16 @@ class Database
     function insert(&$ctx)
     {
         $reservation = $ctx['reservation'];
-        $reservation->calculate_amount();
+        $reservation->calculateAmount();
 
-        $encoded_persons = base64_encode(serialize($reservation->persons));
+        $encodedPersons = base64_encode(serialize($reservation->persons));
 
         $request = "INSERT INTO reservation
                     SET price=$reservation->price,
                         insurance=$reservation->insurance,
                         destination='$reservation->destination',
                         nbr_persons=$reservation->personsCounter,
-                        persons='".$encoded_persons."';";
+                        persons='".$encodedPersons."';";
 
         if ($this->db->exec($request) == 0)
             $ctx['warning'] .= "Rien n'a été enregistré.\n";
@@ -126,16 +126,16 @@ class Database
     function update(&$ctx)
     {
         $reservation = $ctx['reservation'];
-        $reservation->calculate_amount();
+        $reservation->calculateAmount();
 
-        $encoded_persons = base64_encode(serialize($reservation->persons));
+        $encodedPersons = base64_encode(serialize($reservation->persons));
 
         $request = "UPDATE reservation
                     SET price=$reservation->price,
                         insurance=$reservation->insurance,
                         destination='$reservation->destination',
                         nbr_persons=$reservation->personsCounter,
-                        persons='".$encoded_persons."'
+                        persons='".$encodedPersons."'
                     WHERE id=$reservation->id;";
 
         if ($this->db->exec($request) == 0)

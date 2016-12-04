@@ -23,7 +23,7 @@ function route(&$ctx, $redirection)
         'details' => function(&$ctx, $redirection)
         {
             // if the informatin are incorrect, return to the previous page.
-            if (!validation_home($ctx))
+            if (!controller_validateHome($ctx))
                 $redirection = 'home';
             vw_display($ctx, $redirection);
         },
@@ -31,7 +31,7 @@ function route(&$ctx, $redirection)
         'validation' => function(&$ctx, $redirection)
         {
             // if the informatin are incorrect, return to the previous page.
-            if (!validation_details($ctx))
+            if (!controller_validateDetails($ctx))
                 $redirection = 'details';
             vw_display($ctx, $redirection);
         },
@@ -64,7 +64,7 @@ function route(&$ctx, $redirection)
                 else /* action = edit */
                 {
                     // the edition will be processed on the creation form
-                    $_ = $ctx['database']->select_one($ctx, $id);
+                    $_ = $ctx['database']->selectOne($ctx, $id);
                     $ctx['reservation'] = $_;
                     $redirection = 'home';
                 }
