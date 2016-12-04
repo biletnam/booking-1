@@ -33,8 +33,8 @@ function controller_validateHome(&$ctx)
         }
     }
 
-    if (count($reservation->persons) != 0)
-        return true; // we're coming from the next page and the datas are corrects
+    if ($reservation->destination)
+        return true;
 
     $ctx['warning'] .= "Veuillez remplir tous les champs correctement.\n";
 
@@ -78,7 +78,27 @@ function controller_validateDetails(&$ctx)
         return true;
     }
 
+    if ($reservation->persons)
+        return true;
+
     $ctx['warning'] .= "Veuillez remplir tous les champs correctement.\n";
+
+    return false;
+}
+
+/**
+ * Ensure every fields in the reservation context has been filled.
+ * @param the application context (reservation + db)
+ * @return true if every fields are ok
+ */
+function controller_validateConfirmation(&$ctx)
+{
+    $reservation = $ctx['reservation'];
+
+    if ($reservation->persons AND $reservation->destination)
+        return true;
+
+    $ctx['warning'] .= "Please, do not play with the URL.\n";
 
     return false;
 }

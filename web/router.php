@@ -22,7 +22,7 @@ function route(&$ctx, $redirection)
 
         'details' => function(&$ctx, $redirection)
         {
-            // if the informatin are incorrect, return to the previous page.
+            // if inputs are incorrects, go home
             if (!controller_validateHome($ctx))
                 $redirection = 'home';
             vw_display($ctx, $redirection);
@@ -30,7 +30,7 @@ function route(&$ctx, $redirection)
 
         'validation' => function(&$ctx, $redirection)
         {
-            // if the informatin are incorrect, return to the previous page.
+            // if inputs are incorrects, go details
             if (!controller_validateDetails($ctx))
                 $redirection = 'details';
             vw_display($ctx, $redirection);
@@ -38,7 +38,12 @@ function route(&$ctx, $redirection)
 
         'confirmation' => function(&$ctx, $redirection)
         {
-            if ($ctx['isAdmin'])
+            // if reservation is not completed, go home
+            if (!controller_validateConfirmation($ctx))
+            {
+                $redirection = 'home';
+            }
+            else if ($ctx['isAdmin'])
             {
                 $ctx['database']->update($ctx);
                 $redirection = 'update';
