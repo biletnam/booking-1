@@ -7,6 +7,7 @@ $ctx = array(
     "reservation" => null, /* the current reservation */
     "database"    => null, /* an open connection to the db */
     "warning"     => "",   /* a list of warning to display */
+    "isAdmin"     => false /* follow admin privileges */
 );
 
 // include config and middleware
@@ -21,17 +22,15 @@ else
 
 $ctx['database'] = new Database();
 
+// check if the uri contains /admin/
+$ctx['isAdmin'] = preg_match('/admin/', $_SERVER['REQUEST_URI']);
+
 // if the user cancels its reservation,
 // the reservation is reseted to default.
 if (isset($_POST['reset']))
 {
+    $_GET['page'] = $ctx['isAdmin']? 'admin':'home';
     $ctx['reservation']->reset();
-
-    // if the url contains /admin/
-    if (preg_match('/admin/', $_SERVER['REQUEST_URI']))
-        $_GET['page'] = 'admin';
-    else
-        $_GET['page'] = 'home';
 }
 
 // call the router on the requested page

@@ -74,7 +74,7 @@ function generate_home($ctx, $template)
     $values  = array($reservation->destination,
                      $reservation->personsCounter,
                      $reservation->insurance == 'False' ?:'checked',
-                     $reservation->editionMode ? '../../../admin':'home',
+                     $ctx['isAdmin']? '../../../admin':'home',
                      $ctx['warning']);
 
     echo str_replace($markers, $values, $template);

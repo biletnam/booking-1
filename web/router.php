@@ -40,8 +40,7 @@ function redirect_control($ctx, $redirection)
 
         'confirmation' => function($ctx, $redirection)
         {
-            /* if the URI contains 'admin' */
-            if (preg_match('/admin/', $_SERVER['REQUEST_URI']))
+            if ($ctx['isAdmin'])
             {
                 $ctx['database']->update($ctx);
                 $redirection = 'update';
