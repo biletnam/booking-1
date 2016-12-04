@@ -15,7 +15,7 @@ function ctr_validateHome(&$ctx)
     if (!empty($_POST['destination']) AND !empty($_POST['personsCounter']))
     {
         $reservation->destination = htmlspecialchars($_POST['destination']);
-        $reservation->insurance   = isset($_POST['insurance']) ? 'True':'False';
+        $reservation->insurance   = isset($_POST['insurance'])? 'True':'False';
         $personsCounter           = intval($_POST['personsCounter']);
 
         // set bounds to the number of persons
@@ -26,11 +26,9 @@ function ctr_validateHome(&$ctx)
 
             return true;
         }
-        else
-        {
-            $ctx['warning'] .= "Vous ne pouvez enregistrer ".
-                               "que entre 1 et 30 personnes.\n";
-        }
+
+        $ctx['warning'] .= "Vous ne pouvez enregistrer ".
+                           "que entre 1 et 30 personnes.\n";
     }
 
     if ($reservation->destination)
