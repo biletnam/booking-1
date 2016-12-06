@@ -12,7 +12,6 @@ $sql_tables = "CREATE TABLE IF NOT EXISTS `".MYSQL_DB."`.
               `destination` TEXT NOT NULL ,
               `insurance` BOOLEAN NOT NULL ,
               `nbr_persons` INT(2) NOT NULL ,
-              `price` INT(3) NOT NULL ,
               `persons` BLOB NOT NULL ,
               PRIMARY KEY (`id`)) ENGINE = InnoDB;";
 

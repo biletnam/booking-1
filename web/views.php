@@ -70,12 +70,13 @@ function vw_pageHome(&$ctx, $template)
         $ctx['warning'] = '<div id="warning">'.$ctx['warning'].'</div>';
 
     $markers = array('%destination%','%personsCounter%','%insurance%',
-                     '%redirect%'   ,'%warning%');
+                     '%redirect%'   ,'%warning%'       ,'DOCUMENTROOT');
     $values  = array($reservation->destination,
                      $reservation->personsCounter,
                      $reservation->insurance == 'False' ?:'checked',
-                     $ctx['isAdmin']? '../../../admin':'home',
-                     $ctx['warning']);
+                     DOCUMENTROOT.($ctx['isAdmin']? 'admin':'home'),
+                     $ctx['warning'],
+                     DOCUMENTROOT);
 
     echo str_replace($markers, $values, $template);
 }
@@ -110,14 +111,14 @@ function vw_pageAdmin(&$ctx, $template)
             <th>$cell->personsCounter</th>
             <th>$cell->price</th>
             <th>$persons</th>
-            <th><a href="admin/edit/$cell->id/">Edit</a></th>
-            <th><a href="admin/del/$cell->id/">Delete</a></th>
+            <th><a href="DOCUMENTROOT/admin/edit/$cell->id/">Edit</a></th>
+            <th><a href="DOCUMENTROOT/admin/del/$cell->id/">Delete</a></th>
         </tr>
 EOD;
     }
 
-    $markers = array('%table%', '%warning%');
-    $values  = array($tables, $ctx['warning']);
+    $markers = array('%table%', '%warning%', 'DOCUMENTROOT');
+    $values  = array($tables, $ctx['warning'], DOCUMENTROOT);
 
     echo str_replace($markers, $values, $template);
 
@@ -139,8 +140,8 @@ function vw_pageUpdate(&$ctx, $template)
 
     $reservation->calculateAmount();
 
-    $markers = array('%amount%', '%warning%'); 
-    $values  = array($reservation->price, $ctx['warning']);
+    $markers = array('%amount%', '%warning%', 'DOCUMENTROOT'); 
+    $values  = array($reservation->price, $ctx['warning'], DOCUMENTROOT);
 
     echo str_replace($markers, $values, $template);
 
@@ -185,8 +186,8 @@ function vw_pageDetails(&$ctx, $template)
 EOD;
     }
 
-    $markers = array('%table%', '%warning%');
-    $values  = array($tables, $ctx['warning']);
+    $markers = array('%table%', '%warning%', 'DOCUMENTROOT');
+    $values  = array($tables, $ctx['warning'], DOCUMENTROOT);
 
     echo str_replace($markers, $values, $template);
 }
@@ -219,7 +220,10 @@ function vw_pageValidation(&$ctx, $template)
 EOD;
     }
 
-    echo str_replace('%table%', $tables, $template);
+    $markers = array('%table%', 'DOCUMENTROOT');
+    $values  = array($tables, DOCUMENTROOT);
+
+    echo str_replace($markers, $values, $template);
 }
 
 /**
@@ -232,7 +236,12 @@ function vw_pageConfirmation(&$ctx, $template)
 {
     $reservation = $ctx['reservation'];
 
-    echo str_replace('%amount%', $reservation->price, $template);
+    $reservation->calculateAmount();
+
+    $markers = array('%amount%', 'DOCUMENTROOT');
+    $values  = array($reservation->price, DOCUMENTROOT);
+
+    echo str_replace($markers, $values, $template);
     
     $reservation->reset();
 }

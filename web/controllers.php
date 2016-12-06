@@ -31,6 +31,7 @@ function ctr_validateHome(&$ctx)
                            "que entre 1 et 30 personnes.\n";
     }
 
+    // Bypass checks if datas were already filled
     if ($reservation->destination)
         return true;
 
@@ -76,6 +77,7 @@ function ctr_validateDetails(&$ctx)
         return true;
     }
 
+    // Bypass checks if datas were already filled
     if ($reservation->persons)
         return true;
 

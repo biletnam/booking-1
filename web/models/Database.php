@@ -46,20 +46,21 @@ class Database
 
         $request = "SELECT * FROM reservation WHERE id=".$id.";";
 
-        foreach ($this->db->query($request) as $data)
+        foreach ($this->db->query($request) as $row)
         { 
             // this should not be looped more than once but the structure
             // of pdostatement is kind of messy so I'm using a foreach.
 
-            if ($data == false)
+            if ($row == false)
                 $ctx['warning'] .= "L'identifiant de réservation n'existe pas\n";
             else
             {
-                $x->id             = $data['id'];
-                $x->destination    = $data['destination'];
-                $x->insurance      = intval($data['insurance']) ? 'True':'False';
-                $x->personsCounter = intval($data['nbr_persons']);
-                $x->persons        = unserialize(base64_decode($data['persons']));
+                $x->id             = $row['id'];
+                $x->destination    = $row['destination'];
+                $x->insurance      = intval($row['insurance']) ? 'True':'False';
+                $x->personsCounter = intval($row['nbr_persons']);
+                $x->persons        = unserialize(base64_decode($row['persons']));
+                $x->calculateAmount();
                 $x->save();
             }
         }
@@ -86,8 +87,8 @@ class Database
             $x->destination    = $row['destination'];
             $x->insurance      = intval($row['insurance']) ? 'Oui':'Non';
             $x->personsCounter = $row['nbr_persons'];
-            $x->price          = $row['price'];
             $x->persons        = unserialize(base64_decode($row['persons']));
+            $x->calculateAmount();
 
             array_push($reservations, $x);
         }
@@ -103,13 +104,11 @@ class Database
     function insert(&$ctx)
     {
         $reservation = $ctx['reservation'];
-        $reservation->calculateAmount();
 
         $encodedPersons = base64_encode(serialize($reservation->persons));
 
         $request = "INSERT INTO reservation
-                    SET price=$reservation->price,
-                        insurance=$reservation->insurance,
+                    SET insurance=$reservation->insurance,
                         destination='$reservation->destination',
                         nbr_persons=$reservation->personsCounter,
                         persons='".$encodedPersons."';";
@@ -126,13 +125,11 @@ class Database
     function update(&$ctx)
     {
         $reservation = $ctx['reservation'];
-        $reservation->calculateAmount();
 
         $encodedPersons = base64_encode(serialize($reservation->persons));
 
         $request = "UPDATE reservation
-                    SET price=$reservation->price,
-                        insurance=$reservation->insurance,
+                    SET insurance=$reservation->insurance,
                         destination='$reservation->destination',
                         nbr_persons=$reservation->personsCounter,
                         persons='".$encodedPersons."'
