@@ -67,7 +67,8 @@ function vw_pageHome(&$ctx, $template)
     $reservation = $ctx['reservation'];
 
     if ($ctx['warning'])
-        $ctx['warning'] = '<div id="warning">'.$ctx['warning'].'</div>';
+        $ctx['warning'] = '<div class="alert alert-danger" role="alert">'
+                          .$ctx['warning'].'</div>';
 
     $markers = array('%destination%','%personsCounter%','%insurance%',
                      '%redirect%'   ,'%warning%'       ,'DOCUMENTROOT');
@@ -93,7 +94,8 @@ function vw_pageAdmin(&$ctx, $template)
     $reservation = $ctx['reservation'];
 
     if ($ctx['warning'])
-        $ctx['warning'] = '<div id="warning">'.$ctx['warning'].'</div>';
+        $ctx['warning'] = '<div class="alert alert-danger" role="alert">'
+                          .$ctx['warning'].'</div>';
 
     $tables = '';
     
@@ -136,7 +138,8 @@ function vw_pageUpdate(&$ctx, $template)
     $reservation = $ctx['reservation'];
 
     if ($ctx['warning'])
-        $ctx['warning'] = '<div id="warning">'.$ctx['warning'].'</div>';
+        $ctx['warning'] = '<div class="alert alert-danger" role="alert">'
+                          .$ctx['warning'].'</div>';
 
     $reservation->calculateAmount();
 
@@ -160,7 +163,8 @@ function vw_pageDetails(&$ctx, $template)
     $reservation = $ctx['reservation'];
 
     if ($ctx['warning'])
-        $ctx['warning'] = '<div id="warning">'.$ctx['warning'].'</div>';
+        $ctx['warning'] = '<div class="alert alert-danger" role="alert">'
+                          .$ctx['warning'].'</div>';
 
     $tables = '';
 
